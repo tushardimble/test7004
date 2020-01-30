@@ -5,7 +5,7 @@
    switch ($param) {
       
        case 'hi':
-           $speech = "Hi, nice to meet you";
+           $speech = "Hi, nice to meet you. This is call from webhook";
        break;
 
        case 'bye':
