@@ -5,14 +5,14 @@
 
 if($method == 'POST'){
    $input = json_decode(file_get_contents('php://input'), true);
-   $param = $input['queryResult']['parameters']['text'];
+   $param = $input['queryResult']['parameters']['name'];
    switch ($param) {
       
-       case 'hi':
+       case 'tushar':
            $speech = "Hi, nice to meet you. This is call from webhook";
        break;
 
-       case 'bye':
+       case 'john':
            $speech = "Good night";
        break;
         
