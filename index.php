@@ -4,7 +4,7 @@
    $param = $input["queryResult"]["queryText"];
    switch ($param) {
       
-       case 'hi':
+       case 'Hi':
            $speech = "Hi, nice to meet you";
        break;
 
