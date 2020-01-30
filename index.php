@@ -8,11 +8,11 @@ if($method == 'POST'){
    $param = $input['queryResult']['parameters']['text'];
    switch ($param) {
       
-       case 'tushar':
+       case 'hi':
            $speech = "Hi, nice to meet you. This is call from webhook";
        break;
 
-       case 'john':
+       case 'bye':
            $speech = "Good night";
        break;
         
