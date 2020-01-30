@@ -1,7 +1,7 @@
 <?php
 
    $input = json_decode(file_get_contents('php://input'), true);
-   $param = $input["queryResult"]["queryText"];
+   $param = $input['queryResult']['parameters']['text'];
    switch ($param) {
       
        case 'ind':
