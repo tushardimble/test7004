@@ -1,5 +1,7 @@
 <?php
+   $method = $_SERVER['REQUEST_METHOD'];
 
+if($method == 'POST'){
    $input = json_decode(file_get_contents('php://input'), true);
    $param = $input['queryResult']['parameters']['text'];
    switch ($param) {
@@ -25,5 +27,10 @@
    $response->displayText=$speech;
    $response->source="webhook";
    echo json_encode($response);
-   
+  }
+else
+{
+    echo "Method not allowed";
+}
+ 
 ?>
