@@ -22,8 +22,8 @@
            break;
    }
    $response = new \stdClass();
-   $response->speech="";
-   $response->displayText="";
+   $response->speech=$speech;
+   $response->displayText=$speech;
    $response->speech="webhook";
    echo json_encode($response);
 ?>
