@@ -5,7 +5,7 @@
 
 if($method == 'POST'){
    $input = json_decode(file_get_contents('php://input'), true);
-   $param = $input['queryResult']['parameters']['name'];
+   $param = $input['queryResult']['parameters']['text'];
    switch ($param) {
       
        case 'tushar':
