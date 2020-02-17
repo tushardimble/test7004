@@ -1,7 +1,7 @@
 <?php
 	require("common.php");
 	extract($_GET);
-	//echo($mobile_number);exit;
+	echo($account_number);exit;
 	$curl = curl_init();
 	
 	curl_setopt_array($curl, array(
