@@ -1,6 +1,6 @@
 <?php
 	
-	error_reporting(E_ALL);
+	
 	include("DBmanager.php");
     $db     =   new DbManager();
 	$accountNumber = $_GET['account_number'];
