@@ -1,5 +1,5 @@
 <?php
-	
+	echo"hi";exit;
 	include("DBmanager.php");
     $db     =   new DbManager();
 	$accountNumber = $_GET['account_number'];
