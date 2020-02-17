@@ -328,6 +328,7 @@ function textToSpeech(message){
 			console.log(base64string);
 			var snd = new Audio("data:audio/mp3;base64," + base64string);
 			snd.play();
+			recognition.stop();
 		}
 	});
 	//console.log(message)
