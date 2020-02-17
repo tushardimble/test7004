@@ -1,5 +1,5 @@
 <?php
-	error_reporting(0);
+	error_reporting(E_ALL);
 	define('DB_SERVER','10.64.194.154');
 	define('DB_USER','root');
 	define('DB_PASS' ,'');
