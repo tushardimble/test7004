@@ -5,7 +5,7 @@
 	$curl = curl_init();
 	
 	curl_setopt_array($curl, array(
-	  CURLOPT_URL => $basepath."crmapi/checkAccount.php?account_number=$account_number",
+	  CURLOPT_URL => "https://dialogflow7004.herokuapp.com/crmapi/checkAccount.php?account_number=$account_number",
 	  CURLOPT_RETURNTRANSFER => true,
 	  CURLOPT_ENCODING => "",
 	  CURLOPT_MAXREDIRS => 10,
