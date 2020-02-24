@@ -1,7 +1,5 @@
 <?php
 $data = array();
-	$data = <?php
-$data = array();
   $data = array (
   'responseId' => '352c3678-4b31-4a2e-b35e-dd9d667d7ce1-7f245a81',
   'queryResult' => 
@@ -31,7 +29,7 @@ $data = array();
     array (
       0 => 
       array (
-        'name' => 'projects/bankscustomersupport-mnlxxa/agent/sessions/527c9946-cd74-8e76-f1f8-766df5915f91/contexts/BalanceRequest - yes - AccountNumber - PhoneNumber',
+        'name' => 'projects/bankscustomersupport-mnlxxa/agent/sessions/527c9946-cd74-8e76-f1f8-766df5915f91/contexts/balancerequest-yes-custom-followup',
         'lifespanCount' => 2,
         'parameters' => 
         array (
@@ -41,7 +39,7 @@ $data = array();
       ),
       1 => 
       array (
-        'name' => 'projects/bankscustomersupport-mnlxxa/agent/sessions/527c9946-cd74-8e76-f1f8-766df5915f91/contexts/BalanceRequest - yes - AccountNumber - PhoneNumber',
+        'name' => 'projects/bankscustomersupport-mnlxxa/agent/sessions/527c9946-cd74-8e76-f1f8-766df5915f91/contexts/balancerequest-yes-followup',
         'lifespanCount' => 1,
         'parameters' => 
         array (
@@ -74,8 +72,4 @@ $data = array();
 );
 echo json_encode($data);
   
-?>
-
-echo json_encode($data);
-	
 ?>
