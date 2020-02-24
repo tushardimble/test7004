@@ -15,7 +15,7 @@
     ),
   ),
   'source' => 'webhook',
-)
+);
 echo json_decode($data);
 	
 ?>
