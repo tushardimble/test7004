@@ -12,7 +12,7 @@ $data = array();
     ),
     'allRequiredParamsPresent' => true,
     'fulfillmentText' => 'Please enter the Valid Mobile Number linked to Account?',
-    'fulfillmentMessages' => 
+    'messages' => 
     array (
       0 => 
       array (
@@ -70,6 +70,6 @@ $data = array();
     'message' => 'Webhook call failed. Error: UNAVAILABLE.',
   ),
 );
-echo json_decode($data);
+echo json_encode($data);
 	
 ?>
