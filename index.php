@@ -1,73 +1,76 @@
 <?php
 $data = array();
 	$data = array (
-  'responseId' => '352c3678-4b31-4a2e-b35e-dd9d667d7ce1-7f245a81',
-  'queryResult' => 
+  'fulfillmentText' => 'This is a text response',
+  'fulfillmentMessages' => 
   array (
-    'queryText' => '456 123',
-    'action' => 'BalanceRequest.BalanceRequest-yes.BalanceRequest-yes-custom',
-    'parameters' => 
+    0 => 
     array (
-      'Account_Number' => 456123,
-    ),
-    'allRequiredParamsPresent' => true,
-    'fulfillmentText' => 'Please enter the Valid Mobile Number ?',
-    'messages' => 
-    array (
-      0 => 
+      'card' => 
       array (
-        'text' => 
+        'title' => 'card title',
+        'subtitle' => 'card text',
+        'imageUri' => 'https://example.com/images/example.png',
+        'buttons' => 
         array (
-          'text' => 
+          0 => 
           array (
-            0 => 'Please enter the Valid Mobile Number ?',
+            'text' => 'button text',
+            'postback' => 'https://example.com/path/for/end-user/to/follow',
           ),
         ),
       ),
     ),
-    'outputContexts' => 
-    array (
-      0 => 
-      array (
-        'name' => 'projects/bankscustomersupport-mnlxxa/agent/sessions/527c9946-cd74-8e76-f1f8-766df5915f91/contexts/balancerequest-yes-custom-followup',
-        'lifespanCount' => 2,
-        'parameters' => 
-        array (
-          'Account_Number' => 456123,
-          'Account_Number.original' => '456 123',
-        ),
-      ),
-      1 => 
-      array (
-        'name' => 'projects/bankscustomersupport-mnlxxa/agent/sessions/527c9946-cd74-8e76-f1f8-766df5915f91/contexts/balancerequest-yes-followup',
-        'lifespanCount' => 1,
-        'parameters' => 
-        array (
-          'date.original' => '',
-          'Balance' => 'balance',
-          'Account_Number.original' => '456 123',
-          'Balance.original' => 'balance',
-          'Account_Number' => 456123,
-          'date' => '',
-        ),
-      ),
-    ),
-    'intent' => 
-    array (
-      'name' => 'projects/bankscustomersupport-mnlxxa/agent/intents/a4c4ef15-5fbb-4ab2-91d6-ceae1af4a8a3',
-      'displayName' => 'BalanceRequest - yes - AccountNumber',
-    ),
-    'intentDetectionConfidence' => 0.99899966,
-    'diagnosticInfo' => 
-    array (
-      'webhook_latency_ms' => 57,
-    ),
-    'languageCode' => 'en',
   ),
-  'webhookStatus' => 
+  'source' => 'example.com',
+  'payload' => 
   array (
-    'code' => 14,
-    'message' => 'Webhook call failed. Error: UNAVAILABLE.',
+    'google' => 
+    array (
+      'expectUserResponse' => true,
+      'richResponse' => 
+      array (
+        'items' => 
+        array (
+          0 => 
+          array (
+            'simpleResponse' => 
+            array (
+              'textToSpeech' => 'this is a simple response',
+            ),
+          ),
+        ),
+      ),
+    ),
+    'facebook' => 
+    array (
+      'text' => 'Hello, Facebook!',
+    ),
+    'slack' => 
+    array (
+      'text' => 'This is a text response for Slack.',
+    ),
+  ),
+  'outputContexts' => 
+  array (
+    0 => 
+    array (
+      'name' => 'projects/project-id/agent/sessions/session-id/contexts/context-name',
+      'lifespanCount' => 5,
+      'parameters' => 
+      array (
+        'param-name' => 'param-value',
+      ),
+    ),
+  ),
+  'followupEventInput' => 
+  array (
+    'name' => 'event name',
+    'languageCode' => 'en-US',
+    'parameters' => 
+    array (
+      'param-name' => 'param-value',
+    ),
   ),
 );
 echo json_encode($data);
