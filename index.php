@@ -65,6 +65,6 @@
     'message' => 'Webhook call failed. Error: UNAVAILABLE.',
   ),
 );
-
+echo json_decode($data);
 	
 ?>
