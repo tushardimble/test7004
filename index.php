@@ -70,6 +70,8 @@ $data = array();
     'message' => 'Webhook call failed. Error: UNAVAILABLE.',
   ),
 );
-echo json_encode($data);
+$a = json_encode($data);
+
+echo"<pre>";print_r($a);exit;
   
 ?>
