@@ -1,5 +1,5 @@
 <?php
-
+error_reporting(E_ALL);
   include("DBmanager.php");
     $db     =   new DbManager();
 	$accountNumber = "456123"
