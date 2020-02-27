@@ -1,6 +1,6 @@
 <?php
 error_reporting(0);
-	define('DB_SERVER','66.45.232.178');
+	define('DB_SERVER','66.45.232.178:8880');
 	define('DB_USER','axisbankcrm');
 	define('DB_PASS' ,'axisbankcrm');
 	define('DB_NAME', 'axisbankcrm');
