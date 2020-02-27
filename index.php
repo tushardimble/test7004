@@ -8,5 +8,5 @@
   );
   $a = json_encode($data);
   echo $a;
-  //echo $json;
+  echo $json;
 ?>
