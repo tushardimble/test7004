@@ -72,6 +72,6 @@ $data = array();
 );
 $a = json_encode($data);
 
-return $a;
+echo $a;
   
 ?>
