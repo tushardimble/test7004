@@ -1,6 +1,6 @@
 include("DBmanager.php");
     $db     =   new DbManager();
-	$accountNumber = $_GET['account_number'];
+	$accountNumber = "456123"
 
 	$columnName = "CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance";
 	$tableName = "vtiger_contactdetails vcd";
