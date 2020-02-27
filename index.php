@@ -22,9 +22,11 @@
 
 
   if($intent == "BalanceRequest - yes - AccountNumber"){
-    $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd OIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856=$account_number ORDER BY vcd.contactid DESC";
+    $account_number = str_replace(' ', '', $account_number);
+    $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' ORDER BY vcd.contactid DESC";
+    
     $result = $conn->query($sql);
-    while($row = $result->fetch_assoc()) {
+    while($row = $result->mysqli_fetch_assoc()) {
       $data[] = $row;
     }
     
