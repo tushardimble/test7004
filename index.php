@@ -4,9 +4,9 @@
   $account_number = $input['queryResult']['parameters']['Account_Number'];
   $data = array();
   $data = array (
-    'fulfillmentText' => "account number " .$account_number;
+    'fulfillmentText' => "account number ";
   );
   $a = json_encode($data);
-  echo $a;
+  //echo $a;
   echo $json;
 ?>
