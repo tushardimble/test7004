@@ -8,7 +8,7 @@
   $message = "Sorry we could not found any details against this account number";
  }
   $data = array (
-   'fulfillmentText' => $account_number
+   'fulfillmentText' => $message
   );
   $a = json_encode($data);
   
