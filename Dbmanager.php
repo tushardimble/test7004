@@ -1,8 +1,8 @@
 <?php
 	error_reporting(0);
-	define('DB_SERVER','13.71.118.35');
-	define('DB_USER','root');
-	define('DB_PASS' ,'Amri@951753');
+	define('DB_SERVER','66.45.232.178');
+	define('DB_USER','axisbankcrm');
+	define('DB_PASS' ,'axisbankcrm');
 	define('DB_NAME', 'axisbankcrm');
 
 	class DBmanager{
