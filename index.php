@@ -1,8 +1,10 @@
 <?php
-  $connection = mysqli_connect(DB_SERVER,DB_USER,DB_PASS,DB_NAME);
+  $json = file_get_contents('php://input');
+  $input = json_decode($json,true);
+  $account_number = $input['queryResult']['parameters']['Account_Number'];
   $data = array();
   $data = array (
-    'fulfillmentText' => 'hI THIS IS TEST'
+    'fulfillmentText' => $account_number;
   );
   $a = json_encode($data);
   echo $a; 
