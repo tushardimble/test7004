@@ -3,5 +3,10 @@
   $b = json_decode($json);
   //$account_number = $b->queryResult->queryText;
  
-  echo $json;
+  $data = array();
+  $data = array (
+   'fulfillmentText' => "Hiiii";
+  );
+  $a = json_encode($data);
+  echo $a;
 ?>
