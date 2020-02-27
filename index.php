@@ -2,7 +2,14 @@
 
   $request = file_get_contents('php://input');
   $requestDecode = json_decode($request);
+
+  $intent = $requestDecode->queryResult->intent->displayName;
   $account_number = $requestDecode->queryResult->parameters->Account_Number;
+
+  if($intent == "BalanceRequest - yes - AccountNumber"){
+    
+  }
+
   if($account_number == "456123"){
   	$message = "Please Enter mobile number associated with account";
   }else{
