@@ -1,24 +1,27 @@
 <?php
 
-  $request = file_get_contents('php://input');
-  $requestDecode = json_decode($request);
+  include("DBmanager.php");
+    $db     =   new DbManager();
+	$accountNumber = "456123"
 
-  $intent = $requestDecode->queryResult->intent->displayName;
-  $account_number = $requestDecode->queryResult->parameters->Account_Number;
+	$columnName = "CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance";
+	$tableName = "vtiger_contactdetails vcd";
+	$condition = "vce.deleted=0 AND vcscf.cf_856=$accountNumber";
+	$join = "JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid";
+	$sOrderBy = "ORDER BY vcd.contactid DESC";
+	$data = $db -> getDataByJoin($columnName,$tableName,$condition,$join,$sOrderBy);
 
-  if($intent == "BalanceRequest - yes - AccountNumber"){
-    if($account_number == "456123"){
-      $message = "Please Enter mobile number associated with account";
-    }else{
-    $message = "Sorry we could not found any details against this account number";
-    }
-    $data = array (
-      'fulfillmentText' => $message
-    );
-   $aFinalDialogflowResponse = json_encode($data);
+	if(count($data) > 0){
+		$response['status'] = 200;
+		$response['message'] = "Account Balance";
+		$response['data'] = "available";
+		echo json_encode($response);
+	}else{
+		$response['status'] = 400;
+		$response['message'] = "Not Found";
+		echo json_encode($response);
+	}
 
-   echo $aFinalDialogflowResponse;
-  }
 
   
 ?>
