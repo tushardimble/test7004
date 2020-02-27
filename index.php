@@ -2,11 +2,6 @@
   $json = file_get_contents('php://input');
   $b = json_decode($json);
   //$account_number = $b->queryResult->queryText;
-  $data = array();
-  $data = array (
-   'fulfillmentText' => "account number ";
-  );
-  $a = json_encode($data);
-  echo $a;
-  //echo $json;
+ 
+  echo $json;
 ?>
