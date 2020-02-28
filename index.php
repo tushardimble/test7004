@@ -77,6 +77,33 @@
         $message = "Thank you for information,our agent will call you.";
       }
     }
+  }else if($intent == "FixedDeposit"){
+    $fd_amount        = $requestDecode->queryResult->parameters->FDAmount;
+    $locking_period   = $requestDecode->queryResult->parameters->LockingPeriod;
+    $account_number   = $requestDecode->queryResult->parameters->Account_Number;
+    $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+
+    if($fd_amount != "" && $locking_period != "" && $account_number != "" && $mobile_number != ""){
+      // Check Check Mobile Number and Account Number(Combined Check)
+
+      $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+      $data = array();
+      $result = $conn->query($sql);
+      while($row =mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+      }
+      
+      if(count($data) == 0){
+        $message = "Sorry we could not found any details against this account number and mobile number.";
+      }else{
+        // Update FD Amount
+        $fd_amount = str_replace(' ', '', $fd_amount);
+        $locking_period = str_replace(' ', '', $locking_period);
+        $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
+        $result = $conn->query($sql);
+        $message = "Thank you for information,our agent will call you.";
+      }
+    }
   }
   // Dialogflow Response
   $data = array (
