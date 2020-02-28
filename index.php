@@ -104,6 +104,25 @@
         $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options.";
       }
     }
+  }else if($intent == "TicketDetails"){
+
+    $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
+    $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+    if($ticket_number != "" && $mobile_number != ""){
+      $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
+      $data = array();
+      $result = $conn->query($sql);
+      while($row =mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+      }
+      
+      if(count($data) == 0){
+        $message = "Sorry we could not found any details against this Ticket number and Mobile number.";
+      }else{
+        
+        $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'];
+      }
+    }
   }
   // Dialogflow Response
   $data = array (
