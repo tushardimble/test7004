@@ -34,7 +34,8 @@
       $message = "Sorry we could not found any details against this account number";
       $action = "BalanceRequest.BalanceRequest-yes.BalanceRequest-yes-custom";
       $data = array (
-        'fulfillmentText' => $message
+        'fulfillmentText' => $message,
+        'action' => $action
       );
        $aFinalDialogflowResponse = json_encode($data);
   
