@@ -74,7 +74,7 @@
         $home_loan_amount = str_replace(' ', '', $home_loan_amount);
         $sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
         $result = $conn->query($sql);
-        $message = "Thank you for information,our agent will call you.";
+        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out.";
       }
     }
   }else if($intent == "FixedDeposit"){
@@ -101,7 +101,7 @@
         $locking_period = str_replace(' ', '', $locking_period);
         $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
         $result = $conn->query($sql);
-        $message = "Thank you for information,our agent will call you.";
+        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options.";
       }
     }
   }
