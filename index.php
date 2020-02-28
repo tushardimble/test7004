@@ -131,6 +131,6 @@
   );
 
   $aFinalDialogflowResponse = json_encode($data);
-  
+  $conn -> close();
   echo $aFinalDialogflowResponse;
 ?>
