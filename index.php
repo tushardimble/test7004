@@ -29,9 +29,9 @@
     }
     
     if(count($data) > 0){
-      $message = "Please tell mobile number associated with account";
+      $message = "Please tell me the registed mobile number linked to this account";
     }else{
-      $message = "Sorry we could not found any details against this account number";
+      $message = "Sorry we could not found any details against this account number. What else I can help you with?";
       
     }
 
@@ -47,9 +47,9 @@
     }
 
     if(count($data) == 0){
-      $message = "Sorry we could not found any details against this account number and mobile number.";
+      $message = "Sorry we could not found any details against this account number and mobile number. What else I can help you with?";
     }else{
-      $message = "Dear ".$data[0]['name'] . " your account balance is ".$data[0]['account_balance'];
+      $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. ".  What else I can help you with?";
     }
 
   }else if($intent == "HomeLoan"){
@@ -69,13 +69,13 @@
       }
       
       if(count($data) == 0){
-        $message = "Sorry we could not found any details against this account number and mobile number.";
+        $message = "Sorry we could not found any details against this account number and mobile number , What else I can help you with?";
       }else{
         // Update Home Loan Amount
         $home_loan_amount = str_replace(' ', '', $home_loan_amount);
         $sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
         $result = $conn->query($sql);
-        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out.";
+        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
       }
     }
   }else if($intent == "FixedDeposit"){
@@ -95,14 +95,14 @@
       }
       
       if(count($data) == 0){
-        $message = "Sorry we could not found any details against this account number and mobile number.";
+        $message = "Sorry we could not found any details against this account number and mobile number. What else I can help you with?";
       }else{
         // Update FD Amount
         $fd_amount = str_replace(' ', '', $fd_amount);
         $locking_period = str_replace(' ', '', $locking_period);
         $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
         $result = $conn->query($sql);
-        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options.";
+        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options. What else I can help you with?";
       }
     }
   }else if($intent == "TicketDetails"){
@@ -118,16 +118,16 @@
       }
       
       if(count($data) == 0){
-        $message = "Sorry we could not found any details against this Ticket number and Mobile number.";
+        $message = "Sorry we could not found any details against this Ticket number and Mobile number. What else I can help you with?";
       }else{
         
-        $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'];
+        $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
       }
     }
   }
   // Dialogflow Response
   $data = array (
-  	'fulfillmentText' => $message
+    'fulfillmentText' => $message
   );
 
   $aFinalDialogflowResponse = json_encode($data);
