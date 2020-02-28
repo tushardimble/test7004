@@ -32,6 +32,13 @@
       $message = "Please tell mobile number associated with account";
     }else{
       $message = "Sorry we could not found any details against this account number";
+      $action = "BalanceRequest.BalanceRequest-yes.BalanceRequest-yes-custom";
+      $data = array (
+        'fulfillmentText' => $message
+      );
+       $aFinalDialogflowResponse = json_encode($data);
+  
+       echo $aFinalDialogflowResponse;exit;
     }
 
   }else if($intent == "BalanceRequest - yes - AccountNumber - PhoneNumber"){
