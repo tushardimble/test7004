@@ -31,7 +31,7 @@
     if(count($data) > 0){
       $message = "Please tell me the registed mobile number linked to this account";
     }else{
-      $message = "Sorry we could not found any details against this account number. What else I can help you with?";
+      $message = "Sorry we could not find any details against this account number. What else I can help you with?";
       
     }
 
@@ -47,7 +47,7 @@
     }
 
     if(count($data) == 0){
-      $message = "Sorry we could not found any details against this account number and mobile number. What else I can help you with?";
+      $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
     }else{
       $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. ".  What else I can help you with?";
     }
@@ -69,7 +69,7 @@
       }
       
       if(count($data) == 0){
-        $message = "Sorry we could not found any details against this account number and mobile number , What else I can help you with?";
+        $message = "Sorry we could not find any details against this account number and mobile number , What else I can help you with?";
       }else{
         // Update Home Loan Amount
         $home_loan_amount = str_replace(' ', '', $home_loan_amount);
@@ -95,7 +95,7 @@
       }
       
       if(count($data) == 0){
-        $message = "Sorry we could not found any details against this account number and mobile number. What else I can help you with?";
+        $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
       }else{
         // Update FD Amount
         $fd_amount = str_replace(' ', '', $fd_amount);
@@ -118,7 +118,7 @@
       }
       
       if(count($data) == 0){
-        $message = "Sorry we could not found any details against this Ticket number and Mobile number. What else I can help you with?";
+        $message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
       }else{
         
         $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
