@@ -29,7 +29,7 @@
     }
     
     if(count($data) > 0){
-      $message = "Please Tell mobile number associated with account";
+      $message = "Please tell mobile number associated with account";
     }else{
       $message = "Sorry we could not found any details against this account number";
     }
