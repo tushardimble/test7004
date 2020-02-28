@@ -55,39 +55,38 @@
     $home_loan_amount = $requestDecode->queryResult->parameters->HomeLoanAmount;
     $account_number   = $requestDecode->queryResult->parameters->Account_Number;
     $mobile_number    = $requestDecode->queryResult->parameters->Contact;
-    if($home_loan_amount != "" && $account_number != "" && $mobile_number != ""){
-      if($account_number != "" && $mobile_number == ""){
-        // Check Account NUmber Exist in our System
-        $sql = "SELECT vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid vce.deleted=0 AND vcscf.cf_856='$account_number' ORDER BY vcd.contactid DESC";
-        $result = $conn->query($sql);
-        while($row =mysqli_fetch_assoc($result)) {
-          $data[] = $row;
-        }
+    
+    if($home_loan_amount != "" && $account_number != "" && $mobile_number == ""){
+      // Check Account NUmber Exist in our System
+      $sql = "SELECT vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid vce.deleted=0 AND vcscf.cf_856='$account_number' ORDER BY vcd.contactid DESC";
+      $result = $conn->query($sql);
+      while($row =mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+      }
 
-        if(count($data) == 0){
-          $message = "Sorry we could not found any details against this account number";
-        }
-      }else if($account_number != "" && $mobile_number != ""){
-        // Check Check Mobile Number and Account Number(Combined Check)
+      if(count($data) == 0){
+        $message = "Sorry we could not found any details against this account number";
+      }
+    }else if($home_loan_amount != "" && $account_number != "" && $mobile_number == ""){
+      // Check Check Mobile Number and Account Number(Combined Check)
 
-        $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
-        //echo $sql;exit;
-        $result = $conn->query($sql);
-        while($row =mysqli_fetch_assoc($result)) {
-          $data[] = $row;
-        }
+      $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+      //echo $sql;exit;
+      $result = $conn->query($sql);
+      while($row =mysqli_fetch_assoc($result)) {
+        $data[] = $row;
+      }
 
-        if(count($data) == 0){
-          $message = "Sorry we could not found any details against this account number and mobile number.";
-        }
-      }else if($home_loan_amount != "" && $account_number != "" && $mobile_number != ""){
+      if(count($data) == 0){
+        $message = "Sorry we could not found any details against this account number and mobile number.";
+      }else{
         // Update Home Loan Amount
         $home_loan_amount = str_replace(' ', '', $home_loan_amount);
         $sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
         $result = $conn->query($sql);
+        $message = "Thank you for information,our agent will call you.";
       }
     }
-
   }
   // Dialogflow Response
   $data = array (
