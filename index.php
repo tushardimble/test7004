@@ -1,9 +1,9 @@
 <?php
   error_reporting(E_ALL);
   $servername = "66.45.232.178";
-  $username = "axisbankcrm";
-  $password = "axisbankcrm";
-  $dbname = "axisbankcrm";
+  $username = "axisbankcrm1";
+  $password = "axisbankcrm1";
+  $dbname = "axisbankcrm1";
 
 // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
