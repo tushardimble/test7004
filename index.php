@@ -1,6 +1,5 @@
 <?php
-  // Start the session
-  session_start();
+  
   error_reporting(E_ALL);
   $servername = "66.45.232.178";
   $username = "axisbankcrm1";
@@ -31,7 +30,7 @@
     }
     
     if(count($data) > 0){
-      $message = "Please tell me the registed mobile number linked to this account ".$_SESSION["account_number"];
+      $message = "Please tell me the registed mobile number linked to this account ";
       $conn -> close();
     }else{
       $message = "Sorry we could not find any details against this account number. What else I can help you with?";
@@ -53,10 +52,8 @@
       $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
       $conn -> close();
     }else{
-      if(!isset($_SESSION["account_number"])){
-        $_SESSION["account_number"] = "testsession";
-      }
-      $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?".$_SESSION["account_number"];
+
+      $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
       $conn -> close();
     }
 
