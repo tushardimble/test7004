@@ -1,6 +1,7 @@
 <?php
   
   error_reporting(E_ALL);
+  date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
   $username = "axisbankcrm1";
   $password = "axisbankcrm1";
@@ -49,6 +50,37 @@
             $message = "I heard your phone number as ".$mobile_number.", is it correct?";
         }
       }
+    }else if($intent == "Greeting"){
+      $sessionId = "67e04450-1b1b-1815-3407-1b0cc012c314";
+      // Check is session is available
+      $aUserData = array();
+        $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC ";
+        $result     = $conn->query($sql);
+        while($row  = mysqli_fetch_assoc($result)){
+          $aUserData[] = $row;
+        }
+
+        $current_time = date("h:i a"); 
+        //$current_time = "4:00 pm";
+        $current_time = strtotime($current_time);
+        if($current_time > strtotime("11:59 am") && $current_time < strtotime("3:59 pm")){
+          $greeting = "Good Afternoon";
+        }else if($current_time > strtotime("3:59 pm") && $current_time < strtotime("11:59 pm")){
+          $greeting = "Good Evening";
+        }else{
+          $greeting = "Good Morning";
+        }
+        //echo"<pre>";print_r($aUserData);exit;
+        if(count($aUserData) > 0 && $aUserData !=""){
+          // Delete all previous session
+          foreach ($aUserData as $key => $value) {
+            $sql = "DELETE FROM session_data WHERE sessionId = ".$value['sessionId'];
+            $result     = $conn->query($sql);
+            $message = $greeting." Hi I am Axis bank buddy.  Welcome to Axis bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
+          }
+        }else{
+          $message = $greeting." Hi I am Axis bank buddy.  Welcome to Axis bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
+        }
     }else if($intent == "BalanceRequest - yes"){
 
       // Get Data From Session Id 
