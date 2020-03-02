@@ -70,11 +70,13 @@
         }else{
           $greeting = "Good Morning";
         }
-        //echo"<pre>";print_r($aUserData);exit;
+       
         if(count($aUserData) > 0 && $aUserData !=""){
           // Delete all previous session
           foreach ($aUserData as $key => $value) {
-            $sql = "DELETE FROM session_data WHERE sessionId = ".$value['sessionId'];
+            $sessionId = $value['sessionId'];
+            $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
+            
             $result     = $conn->query($sql);
             $message = $greeting." Hi I am Axis bank buddy.  Welcome to Axis bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
           }
