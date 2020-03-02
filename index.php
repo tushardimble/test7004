@@ -110,16 +110,7 @@
           $conn -> close();
         }
       }else{
-        $data['followupEventInput']['name'] = "recall";
-        // Dialogflow Response
-        // $data = array (
-        //   'followupEventInput' => $message
-        // );
-
-        $aFinalDialogflowResponse = json_encode($data);
-        
-        echo $aFinalDialogflowResponse;
-        exit;
+        $message = "Dear User tell Enter mobile number and account number";
       }
     }else if($intent == "HomeLoan"){
       // Get Data From Session Id 
