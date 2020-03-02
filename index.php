@@ -1,10 +1,12 @@
 <?php
+  // Start the session
+  session_start();
   error_reporting(E_ALL);
   $servername = "66.45.232.178";
   $username = "axisbankcrm1";
   $password = "axisbankcrm1";
   $dbname = "axisbankcrm1";
-
+  
 // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
   // Check connection
@@ -20,16 +22,16 @@
   if($intent == "BalanceRequest - yes - AccountNumber"){
     $account_number = $requestDecode->queryResult->parameters->Account_Number;
     $account_number = str_replace(' ', '', $account_number);
-
+    $_SESSION["account_number"] = $account_number;
     $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' ORDER BY vcd.contactid DESC";
-    
+    $data = array();
     $result = $conn->query($sql);
     while($row =mysqli_fetch_assoc($result)) {
       $data[] = $row;
     }
     
     if(count($data) > 0){
-      $message = "Please tell me the registed mobile number linked to this account";
+      $message = "Please tell me the registed mobile number linked to this account ".$_SESSION["account_number"];
       $conn -> close();
     }else{
       $message = "Sorry we could not find any details against this account number. What else I can help you with?";
@@ -39,7 +41,7 @@
   }else if($intent == "BalanceRequest - yes - AccountNumber - PhoneNumber"){
 
     $mobile_number = $requestDecode->queryResult->parameters->Contact;
-
+    
     $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcd.mobile='$mobile_number'ORDER BY vcd.contactid DESC";
     //echo $sql;exit;
     $result = $conn->query($sql);
@@ -51,7 +53,7 @@
       $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
       $conn -> close();
     }else{
-      $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. ".  What else I can help you with?";
+      $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?".$_SESSION["account_number"];
       $conn -> close();
     }
 
