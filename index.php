@@ -1,6 +1,6 @@
 <?php
   
-  error_reporting(0);
+  error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
   $username = "axisbankcrm1";
@@ -149,6 +149,7 @@
         $message = "Dear User tell Enter mobile number and account number";
       }
     }else if($intent == "openFDaccount"){
+      
       // Get Data From Session Id 
       $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
       $result     = $conn->query($sql);
@@ -182,11 +183,16 @@
             $conn -> close();
           }
         }else{
-          $message = "Dear User tell Enter mobile number and account number";
+          $data['followupEventInput']['name'] ="recall";
+          $a = json_encode($data);
+          //$message = "Dear User tell Enter mobile number and account number";
+          echo $a;exit;
         }
       }else{
+        
         $message = "Dear User tell Enter mobile number and account number";
       }
+        
     }else if($intent == "TicketDetails"){
 
       $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
