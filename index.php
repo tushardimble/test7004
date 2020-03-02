@@ -51,7 +51,7 @@
         }
       }
     }else if($intent == "Greeting"){
-      $sessionId = "67e04450-1b1b-1815-3407-1b0cc012c314";
+      
       // Check is session is available
       $aUserData = array();
         $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC ";
