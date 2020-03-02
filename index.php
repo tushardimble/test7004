@@ -49,7 +49,7 @@
             $message = "I heard your phone number as ".$mobile_number.", is it correct?";
         }
       }
-    }else if($intent == "BalanceRequest - yes - AccountNumber - PhoneNumber"){
+    }else if($intent == "BalanceRequest - yes"){
       // Get Data From Session Id 
       $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
       $result     = $conn->query($sql);
