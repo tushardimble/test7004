@@ -44,10 +44,13 @@
           $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
           $conn -> close();
         }else{
-          
             $sql = "INSERT INTO session_data(sessionId,account_number,mobile_number) VALUES ('$sessionId','$account_number','$mobile_number')";
             $result = $conn->query($sql);
-            $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+            if($intent === "authenticationselection - custom"){
+              $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+            }else if($intent ==="add_details"){
+              $message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
+            }
         }
       }
     }else if($intent == "Greeting"){
@@ -110,7 +113,12 @@
           $conn -> close();
         }
       }else{
-        $message = "Dear User tell Enter mobile number and account number";
+        $data['followupEventInput']['name'] ="recall";
+          $data['followupEventInput']['parameters']['Account_Number']='';
+          $data['followupEventInput']['parameters']['Contact']='';
+          $data['languageCode']= "en-US";
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
       }
     }else if($intent == "HomeLoan"){
       // Get Data From Session Id 
@@ -146,7 +154,12 @@
           $message = "Dear User Please tell home loan amount.";
         }
       }else{
-        $message = "Dear User tell Enter mobile number and account number";
+          $data['followupEventInput']['name'] ="recall";
+          $data['followupEventInput']['parameters']['Account_Number']='';
+          $data['followupEventInput']['parameters']['Contact']='';
+          $data['languageCode']= "en-US";
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
       }
     }else if($intent == "openFDaccount"){
       
@@ -187,16 +200,17 @@
           $data['followupEventInput']['parameters']['Account_Number']='';
           $data['followupEventInput']['parameters']['Contact']='';
           $data['languageCode']= "en-US";
-          $a = json_encode($data);
-          //$message = "Dear User tell Enter mobile number and account number";
-          echo $a;exit;
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
         }
       }else{
         
-        $data['followupEventInput']['name'] ="recall";
-          $a = json_encode($data);
-          //$message = "Dear User tell Enter mobile number and account number";
-          echo $a;exit;
+          $data['followupEventInput']['name'] ="recall";
+          $data['followupEventInput']['parameters']['Account_Number']='';
+          $data['followupEventInput']['parameters']['Contact']='';
+          $data['languageCode']= "en-US";
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
       }
         
     }else if($intent == "TicketDetails"){
