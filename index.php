@@ -190,7 +190,10 @@
         }
       }else{
         
-        $message = "Dear User tell Enter mobile number and account number";
+        $data['followupEventInput']['name'] ="recall";
+          $a = json_encode($data);
+          //$message = "Dear User tell Enter mobile number and account number";
+          echo $a;exit;
       }
         
     }else if($intent == "TicketDetails"){
