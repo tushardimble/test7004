@@ -1,6 +1,6 @@
 <?php
   
-  error_reporting(E_ALL);
+  error_reporting(0);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
   $username = "axisbankcrm1";
@@ -151,10 +151,9 @@
     }else if($intent == "openFDaccount"){
       // Get Data From Session Id 
       $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
-
       $result     = $conn->query($sql);
       $aUserData  = mysqli_fetch_assoc($result);
-
+      //echo"<pre>";print_r($aUserData);
       if(count($aUserData) != 0 && $aUserData != ""){
         $account_number = $aUserData['account_number'];
         $mobile_number = $aUserData['mobile_number'];
@@ -185,6 +184,8 @@
         }else{
           $message = "Dear User tell Enter mobile number and account number";
         }
+      }else{
+        $message = "Dear User tell Enter mobile number and account number";
       }
     }else if($intent == "TicketDetails"){
 
