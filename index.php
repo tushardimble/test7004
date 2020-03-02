@@ -3,9 +3,9 @@
   error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
-  $username = "axisbankcrm1";
-  $password = "axisbankcrm1";
-  $dbname = "axisbankcrm1";
+  $username = "Conneqtbankcrm1";
+  $password = "Conneqtbankcrm1";
+  $dbname = "Conneqtbankcrm1";
   $data = array();
 // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
@@ -81,10 +81,10 @@
             $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
             
             $result     = $conn->query($sql);
-            $message = $greeting." Hi I am Axis bank buddy.  Welcome to Axis bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
+            $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
           }
         }else{
-          $message = $greeting." Hi I am Axis bank buddy.  Welcome to Axis bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
+          $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
         }
     }else if($intent == "BalanceRequest - yes"){
 
