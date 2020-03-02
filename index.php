@@ -50,15 +50,19 @@
         }
       }
     }else if($intent == "BalanceRequest - yes"){
+
       // Get Data From Session Id 
       $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
+
       $result     = $conn->query($sql);
       $aUserData  = mysqli_fetch_assoc($result);
-      if(count($aUserData) == 1 && $aUserData != ""){
-        $account_number = $aUserData[0]['account_number'];
-        $mobile_number = $aUserData[0]['mobile_number'];
+
+      if(count($aUserData) != 0 && $aUserData != ""){
+        $account_number = $aUserData['account_number'];
+        $mobile_number = $aUserData['mobile_number'];
         // Get Account Balance
-        $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+        $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+        
         $data = array();
         $result = $conn->query($sql);
         while($row =mysqli_fetch_assoc($result)) {
