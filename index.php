@@ -88,6 +88,7 @@
       if(count($aUserData) != 0 && $aUserData != ""){
         $account_number = $aUserData['account_number'];
         $mobile_number = $aUserData['mobile_number'];
+        $home_loan_amount = $requestDecode->queryResult->parameters->HomeLoanAmount;
         if($home_loan_amount != "" && $account_number != "" && $mobile_number != ""){
           $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
           $data = array();
