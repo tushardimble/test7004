@@ -184,6 +184,9 @@
           }
         }else{
           $data['followupEventInput']['name'] ="recall";
+          $data['followupEventInput']['parameters']['Account_Number']='';
+          $data['followupEventInput']['parameters']['Contact']='';
+          $data['languageCode']= "en-US";
           $a = json_encode($data);
           //$message = "Dear User tell Enter mobile number and account number";
           echo $a;exit;
