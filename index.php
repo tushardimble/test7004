@@ -3,9 +3,9 @@
   error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
-  $username = "Conneqtbankcrm1";
-  $password = "Conneqtbankcrm1";
-  $dbname = "Conneqtbankcrm1";
+  $username = "axisbankcrm1";
+  $password = "axisbankcrm1";
+  $dbname = "axisbankcrm1";
   $data = array();
 // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
