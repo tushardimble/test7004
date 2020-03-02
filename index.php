@@ -27,7 +27,7 @@
   
 
   if($sessionId != ""){
-    if($intent === "authenticationselection - custom"){
+    if($intent === "authenticationselection - custom" || $intent ==="add_details"){
       $account_number = $requestDecode->queryResult->parameters->Account_Number;
       $account_number = str_replace(' ', '', $account_number);
       $mobile_number = $requestDecode->queryResult->parameters->Contact;
