@@ -148,33 +148,42 @@
       }else{
         $message = "Dear User tell Enter mobile number and account number";
       }
-    }else if($intent == "FixedDeposit"){
-      $fd_amount        = $requestDecode->queryResult->parameters->FDAmount;
-      $locking_period   = $requestDecode->queryResult->parameters->LockingPeriod;
-      $account_number   = $requestDecode->queryResult->parameters->Account_Number;
-      $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+    }else if($intent == "openFDaccount"){
+      // Get Data From Session Id 
+      $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
 
-      if($fd_amount != "" && $locking_period != "" && $account_number != "" && $mobile_number != ""){
-        // Check Check Mobile Number and Account Number(Combined Check)
+      $result     = $conn->query($sql);
+      $aUserData  = mysqli_fetch_assoc($result);
 
-        $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
-        $data = array();
-        $result = $conn->query($sql);
-        while($row =mysqli_fetch_assoc($result)) {
-          $data[] = $row;
-        }
-        
-        if(count($data) == 0){
-          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
-          $conn -> close();
-        }else{
-          // Update FD Amount
-          $fd_amount = str_replace(' ', '', $fd_amount);
-          $locking_period = str_replace(' ', '', $locking_period);
-          $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
+      if(count($aUserData) != 0 && $aUserData != ""){
+        $account_number = $aUserData['account_number'];
+        $mobile_number = $aUserData['mobile_number'];
+        $fd_amount        = $requestDecode->queryResult->parameters->FDAmount;
+        $locking_period   = $requestDecode->queryResult->parameters->LockingPeriod;
+        if($fd_amount != "" && $locking_period != "" && $account_number != "" && $mobile_number != ""){
+          // Check Check Mobile Number and Account Number(Combined Check)
+
+          $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+          $data = array();
           $result = $conn->query($sql);
-          $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options. What else I can help you with?";
-          $conn -> close();
+          while($row =mysqli_fetch_assoc($result)) {
+            $data[] = $row;
+          }
+          
+          if(count($data) == 0){
+            $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+            $conn -> close();
+          }else{
+            // Update FD Amount
+            $fd_amount = str_replace(' ', '', $fd_amount);
+            $locking_period = str_replace(' ', '', $locking_period);
+            $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
+            $result = $conn->query($sql);
+            $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options. What else I can help you with?";
+            $conn -> close();
+          }
+        }else{
+          $message = "Dear User tell Enter mobile number and account number";
         }
       }
     }else if($intent == "TicketDetails"){
