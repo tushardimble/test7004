@@ -5,7 +5,7 @@
   $username = "axisbankcrm1";
   $password = "axisbankcrm1";
   $dbname = "axisbankcrm1";
-  
+  $data = array();
 // Create connection
   $conn = new mysqli($servername, $username, $password, $dbname);
   // Check connection
@@ -15,124 +15,142 @@
 
   $request = file_get_contents('php://input');
   $requestDecode = json_decode($request);
- 
-  $intent = $requestDecode->queryResult->intent->displayName;
   
-  if($intent == "BalanceRequest - yes - AccountNumber"){
-    $account_number = $requestDecode->queryResult->parameters->Account_Number;
-    $account_number = str_replace(' ', '', $account_number);
-    $_SESSION["account_number"] = $account_number;
-    $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' ORDER BY vcd.contactid DESC";
-    $data = array();
-    $result = $conn->query($sql);
-    while($row =mysqli_fetch_assoc($result)) {
-      $data[] = $row;
-    }
-    
-    if(count($data) > 0){
-      $message = "Please tell me the registed mobile number linked to this account ";
-      $conn -> close();
-    }else{
-      $message = "Sorry we could not find any details against this account number. What else I can help you with?";
-      $conn -> close();
-    }
 
-  }else if($intent == "BalanceRequest - yes - AccountNumber - PhoneNumber"){
+  $intent = $requestDecode->queryResult->intent->displayName;
 
-    $mobile_number = $requestDecode->queryResult->parameters->Contact;
-    
-    $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcd.mobile='$mobile_number'ORDER BY vcd.contactid DESC";
-    //echo $sql;exit;
-    $result = $conn->query($sql);
-    while($row =mysqli_fetch_assoc($result)) {
-      $data[] = $row;
-    }
+  // For session Id
+  $outputContexts = $requestDecode->queryResult->outputContexts[0]->name;
+  $outputContextsArray = explode("/", $outputContexts);
+  $sessionId = $outputContextsArray[4];
+  
 
-    if(count($data) == 0){
-      $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
-      $conn -> close();
-    }else{
+  if($sessionId != ""){
+    if($intent === "authenticationselection - custom"){
+      $account_number = $requestDecode->queryResult->parameters->Account_Number;
+      $account_number = str_replace(' ', '', $account_number);
+      $mobile_number = $requestDecode->queryResult->parameters->Contact;
+      if($account_number != "" && $mobile_number != ""){
+        // Check Entered Mobile Number is correct
+        $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
 
-      $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
-      $conn -> close();
-    }
-
-  }else if($intent == "HomeLoan"){
-
-    $home_loan_amount = $requestDecode->queryResult->parameters->HomeLoanAmount;
-    $account_number   = $requestDecode->queryResult->parameters->Account_Number;
-    $mobile_number    = $requestDecode->queryResult->parameters->Contact;
-    
-    if($home_loan_amount != "" && $account_number != "" && $mobile_number != ""){
-      // Check Check Mobile Number and Account Number(Combined Check)
-
-      $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
-      $data = array();
-      $result = $conn->query($sql);
-      while($row =mysqli_fetch_assoc($result)) {
-        $data[] = $row;
-      }
-      
-      if(count($data) == 0){
-        $message = "Sorry we could not find any details against this account number and mobile number , What else I can help you with?";
-        $conn -> close();
-      }else{
-        // Update Home Loan Amount
-        $home_loan_amount = str_replace(' ', '', $home_loan_amount);
-        $sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
         $result = $conn->query($sql);
-        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
-        $conn -> close();
-      }
-    }
-  }else if($intent == "FixedDeposit"){
-    $fd_amount        = $requestDecode->queryResult->parameters->FDAmount;
-    $locking_period   = $requestDecode->queryResult->parameters->LockingPeriod;
-    $account_number   = $requestDecode->queryResult->parameters->Account_Number;
-    $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+        while($row =mysqli_fetch_assoc($result)) {
+          $data[] = $row;
+        }
 
-    if($fd_amount != "" && $locking_period != "" && $account_number != "" && $mobile_number != ""){
-      // Check Check Mobile Number and Account Number(Combined Check)
-
-      $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
-      $data = array();
-      $result = $conn->query($sql);
-      while($row =mysqli_fetch_assoc($result)) {
-        $data[] = $row;
+        if(count($data) == 0){
+          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+          $conn -> close();
+        }else{
+          
+            $sql = "INSERT INTO session_data(sessionId,account_number,mobile_number) VALUES ('$sessionId','$account_number','$mobile_number')";
+            $result = $conn->query($sql);
+            $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+        }
       }
-      
-      if(count($data) == 0){
-        $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
-        $conn -> close();
-      }else{
-        // Update FD Amount
-        $fd_amount = str_replace(' ', '', $fd_amount);
-        $locking_period = str_replace(' ', '', $locking_period);
-        $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
+    }else if($intent == "BalanceRequest - yes - AccountNumber - PhoneNumber"){
+      // Get Data From Session Id 
+      $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
+      $result     = $conn->query($sql);
+      $aUserData  = mysqli_fetch_assoc($result);
+      if(count($aUserData) == 1 && $aUserData != ""){
+        $account_number = $aUserData[0]['account_number'];
+        $mobile_number = $aUserData[0]['mobile_number'];
+        // Get Account Balance
+        $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+        $data = array();
         $result = $conn->query($sql);
-        $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options. What else I can help you with?";
-        $conn -> close();
-      }
-    }
-  }else if($intent == "TicketDetails"){
-
-    $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
-    $mobile_number    = $requestDecode->queryResult->parameters->Contact;
-    if($ticket_number != "" && $mobile_number != ""){
-      $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
-      $data = array();
-      $result = $conn->query($sql);
-      while($row =mysqli_fetch_assoc($result)) {
-        $data[] = $row;
-      }
-      
-      if(count($data) == 0){
-        $message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
-        $conn -> close();
+        while($row =mysqli_fetch_assoc($result)) {
+          $data[] = $row;
+        }
+        if(count($data) == 0){
+          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+          $conn -> close();
+        }else{
+          $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
+          $conn -> close();
+        }
       }else{
+        $message = "Dear User Please Enter mobile number and account number";
+      }
+    }else if($intent == "HomeLoan"){
+
+      $home_loan_amount = $requestDecode->queryResult->parameters->HomeLoanAmount;
+      $account_number   = $requestDecode->queryResult->parameters->Account_Number;
+      $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+      
+      if($home_loan_amount != "" && $account_number != "" && $mobile_number != ""){
+        // Check Check Mobile Number and Account Number(Combined Check)
+
+        $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+        $data = array();
+        $result = $conn->query($sql);
+        while($row =mysqli_fetch_assoc($result)) {
+          $data[] = $row;
+        }
         
-        $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
-        $conn -> close();
+        if(count($data) == 0){
+          $message = "Sorry we could not find any details against this account number and mobile number , What else I can help you with?";
+          $conn -> close();
+        }else{
+          // Update Home Loan Amount
+          $home_loan_amount = str_replace(' ', '', $home_loan_amount);
+          $sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
+          $result = $conn->query($sql);
+          $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
+          $conn -> close();
+        }
+      }
+    }else if($intent == "FixedDeposit"){
+      $fd_amount        = $requestDecode->queryResult->parameters->FDAmount;
+      $locking_period   = $requestDecode->queryResult->parameters->LockingPeriod;
+      $account_number   = $requestDecode->queryResult->parameters->Account_Number;
+      $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+
+      if($fd_amount != "" && $locking_period != "" && $account_number != "" && $mobile_number != ""){
+        // Check Check Mobile Number and Account Number(Combined Check)
+
+        $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+        $data = array();
+        $result = $conn->query($sql);
+        while($row =mysqli_fetch_assoc($result)) {
+          $data[] = $row;
+        }
+        
+        if(count($data) == 0){
+          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+          $conn -> close();
+        }else{
+          // Update FD Amount
+          $fd_amount = str_replace(' ', '', $fd_amount);
+          $locking_period = str_replace(' ', '', $locking_period);
+          $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
+          $result = $conn->query($sql);
+          $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options. What else I can help you with?";
+          $conn -> close();
+        }
+      }
+    }else if($intent == "TicketDetails"){
+
+      $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
+      $mobile_number    = $requestDecode->queryResult->parameters->Contact;
+      if($ticket_number != "" && $mobile_number != ""){
+        $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
+        $data = array();
+        $result = $conn->query($sql);
+        while($row =mysqli_fetch_assoc($result)) {
+          $data[] = $row;
+        }
+        
+        if(count($data) == 0){
+          $message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
+          $conn -> close();
+        }else{
+          
+          $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
+          $conn -> close();
+        }
       }
     }
   }
