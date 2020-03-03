@@ -47,10 +47,13 @@
             $sql = "INSERT INTO session_data(sessionId,account_number,mobile_number) VALUES ('$sessionId','$account_number','$mobile_number')";
             $result = $conn->query($sql);
             if($intent === "authenticationselection - custom"){
+
               $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+
+              $otp = rand(1000,9999);
               // Send OTP
               $curl = curl_init();
-              $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/6587";
+              $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/".$otp;
               curl_setopt_array($curl, array(
                 CURLOPT_URL => $url,
                 CURLOPT_RETURNTRANSFER => true,
@@ -67,13 +70,27 @@
 
               curl_close($curl);
 
-              
+              $sql = "INSERT INTO validate_otp(mobile_number,otp) VALUES ('$mobile_number','$otp')";
+              $result = $conn->query($sql);
             }else if($intent ==="add_details"){
               //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
                $message = "I heard your phone number as ".$mobile_number.", is it correct?";
             }
         }
       }
+    }else if($intent == "authenticationselection - custom - yes - otp"){
+      $mobile_number = $requestDecode->queryResult->parameters->Contact;
+      $otp = $requestDecode->queryResult->parameters->OTP;
+
+      // Check OTP is Valid Or Not
+      $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' LIMIT 1";
+      $result     = $conn->query($sql);
+      $row  = mysqli_fetch_assoc($result);
+
+      if(count($row) == 1 && $row!= ""){
+        $message = "You are successfully authenticated now. You can now ask me regarding your account details";
+      }
+    }
     }else if($intent == "Greeting"){
       
       // Check is session is available
