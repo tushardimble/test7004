@@ -48,6 +48,26 @@
             $result = $conn->query($sql);
             if($intent === "authenticationselection - custom"){
               $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+              // Send OTP
+              $curl = curl_init();
+              $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/6587";
+              curl_setopt_array($curl, array(
+                CURLOPT_URL => $url,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => "",
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 0,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_CUSTOMREQUEST => "POST",
+              ));
+
+              $response = curl_exec($curl);
+              $err = curl_error($curl);
+
+              curl_close($curl);
+
+              
             }else if($intent ==="add_details"){
               //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
                $message = "I heard your phone number as ".$mobile_number.", is it correct?";
