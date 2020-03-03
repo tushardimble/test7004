@@ -1,6 +1,6 @@
 <?php
   
-  error_reporting(0);
+  error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
   $username = "axisbankcrm1";
@@ -49,7 +49,8 @@
             if($intent === "authenticationselection - custom"){
               $message = "I heard your phone number as ".$mobile_number.", is it correct?";
             }else if($intent ==="add_details"){
-              $message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
+              //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
+               $message = "I heard your phone number as ".$mobile_number.", is it correct?";
             }
         }
       }
@@ -113,10 +114,10 @@
           $conn -> close();
         }
       }else{
-        $data['followupEventInput']['name'] ="recall";
-          $data['followupEventInput']['parameters']['Account_Number']='';
-          $data['followupEventInput']['parameters']['Contact']='';
-          $data['languageCode']= "en-US";
+        $data['followupEventInput']['name'] = "recall";
+          $data['followupEventInput']['parameters']['Account_Number'] = '';
+          $data['followupEventInput']['parameters']['Contact'] = '';
+          $data['languageCode'] = "en-US";
           $aBlankDetails = json_encode($data);
           echo $aBlankDetails;exit;
       }
@@ -236,6 +237,7 @@
           $conn -> close();
         }else{
           $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
+
           if($ticket_number != "" && $mobile_number != ""){
             $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
             $data = array();
