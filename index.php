@@ -93,9 +93,24 @@
         $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' ORDER BY validate_otp_id DESC LIMIT 1";
         $result     = $conn->query($sql);
         $row  = mysqli_fetch_assoc($result);
+        //echo"<pre>";print_r($row);exit;
+        if(count($row) > 0 && $row!= ""){
 
-        if(count($row) == 1 && $row!= ""){
           $message = "You are successfully authenticated now. You can now ask me regarding your account details";
+          $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' ORDER BY validate_otp_id DESC";
+          
+          $result     = $conn->query($sql);
+          while($row  = mysqli_fetch_assoc($result)){
+            $aOTPData[] = $row;
+          }
+          
+          // Delete All OTP
+          
+          $deleteSql = "DELETE FROM validate_otp WHERE $mobile_number ='$mobile_number'";
+          $result     = $conn->query($sql);
+          
+        }else{
+          $message = "Invalid OTP";
         }
       }else{
         $data['followupEventInput']['name'] = "recall";
