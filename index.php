@@ -69,19 +69,19 @@
               $sql = "INSERT INTO validate_otp(mobile_number,otp) VALUES ('$mobile_number','$otp')";
               $result = $conn->query($sql);
 
-              
+
             if($intent === "authenticationselection - custom"){
 
-              $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+              $message = "We have sent an OTP to your mobile number. Please tell me the OTP.";
 
               
             }else if($intent ==="add_details"){
               //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
-               $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+               $message = "We have sent an OTP to your mobile number. Please tell me the OTP.";
             }
         }
       }
-    }else if($intent == "authenticationselection - custom - yes - otp"){
+    }else if($intent == "authenticationselection - custom - yes"){
       
       $otp = $requestDecode->queryResult->parameters->OTP;
       // Get Data From Session Id 
