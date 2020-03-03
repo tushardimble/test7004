@@ -90,7 +90,7 @@
       if(count($aUserData) != 0 && $aUserData != ""){
         $mobile_number = $aUserData['mobile_number'];
         // Check OTP is Valid Or Not
-        $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' LIMIT 1";
+        $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' ORDER BY validate_otp_id DESC LIMIT 1";
         $result     = $conn->query($sql);
         $row  = mysqli_fetch_assoc($result);
 
