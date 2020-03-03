@@ -110,10 +110,10 @@
           $result     = $conn->query($sql);
           
         }else{
-          $message = "Invalid OTP";
+          $message = "OTP provided is not matching.Please say Hi for reprocess.";
         }
       }else{
-        $data['followupEventInput']['name'] = "recall";
+          $data['followupEventInput']['name'] = "recall";
           $data['followupEventInput']['parameters']['Account_Number'] = '';
           $data['followupEventInput']['parameters']['Contact'] = '';
           $data['languageCode'] = "en-US";
