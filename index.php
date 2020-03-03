@@ -214,26 +214,55 @@
       }
         
     }else if($intent == "TicketDetails"){
+      // Get Data From Session Id 
+      $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
 
-      $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
-      $mobile_number    = $requestDecode->queryResult->parameters->Contact;
-      if($ticket_number != "" && $mobile_number != ""){
-        $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
+      $result     = $conn->query($sql);
+      $aUserData  = mysqli_fetch_assoc($result);
+
+      if(count($aUserData) != 0 && $aUserData != ""){
+        $account_number = $aUserData['account_number'];
+        $mobile_number = $aUserData['mobile_number'];
+        // Get Account Balance
+        $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+        
         $data = array();
         $result = $conn->query($sql);
         while($row =mysqli_fetch_assoc($result)) {
           $data[] = $row;
         }
-        
         if(count($data) == 0){
-          $message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
+          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
           $conn -> close();
         }else{
-          
-          $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
-          $conn -> close();
+          $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
+          if($ticket_number != "" && $mobile_number != ""){
+            $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
+            $data = array();
+            $result = $conn->query($sql);
+            while($row =mysqli_fetch_assoc($result)) {
+              $data[] = $row;
+            }
+            
+            if(count($data) == 0){
+              $message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
+              $conn -> close();
+            }else{
+              
+              $message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
+              $conn -> close();
+            }
+          }
         }
+      }else{
+        $data['followupEventInput']['name'] ="recall";
+        $data['followupEventInput']['parameters']['Account_Number']='';
+        $data['followupEventInput']['parameters']['Contact']='';
+        $data['languageCode']= "en-US";
+        $aBlankDetails = json_encode($data);
+        echo $aBlankDetails;exit;
       }
+      
     }
   }
   // Dialogflow Response
