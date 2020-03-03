@@ -1,5 +1,5 @@
 <?php
-  
+ 
   error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
@@ -90,7 +90,6 @@
       if(count($row) == 1 && $row!= ""){
         $message = "You are successfully authenticated now. You can now ask me regarding your account details";
       }
-    }
     }else if($intent == "Greeting"){
       
       // Check is session is available
