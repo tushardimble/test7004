@@ -46,11 +46,7 @@
         }else{
             $sql = "INSERT INTO session_data(sessionId,account_number,mobile_number) VALUES ('$sessionId','$account_number','$mobile_number')";
             $result = $conn->query($sql);
-            if($intent === "authenticationselection - custom"){
-
-              $message = "I heard your phone number as ".$mobile_number.", is it correct?";
-
-              $otp = rand(1000,9999);
+            $otp = rand(1000,9999);
               // Send OTP
               $curl = curl_init();
               $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/".$otp;
@@ -72,6 +68,13 @@
 
               $sql = "INSERT INTO validate_otp(mobile_number,otp) VALUES ('$mobile_number','$otp')";
               $result = $conn->query($sql);
+
+              
+            if($intent === "authenticationselection - custom"){
+
+              $message = "I heard your phone number as ".$mobile_number.", is it correct?";
+
+              
             }else if($intent ==="add_details"){
               //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
                $message = "I heard your phone number as ".$mobile_number.", is it correct?";
