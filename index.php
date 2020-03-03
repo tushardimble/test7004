@@ -53,7 +53,7 @@
               $otp = rand(1000,9999);
               // Send OTP
               $curl = curl_init();
-              $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd9360425/SMS/".$mobile_number."/".$otp;
+              $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/".$otp;
               curl_setopt_array($curl, array(
                 CURLOPT_URL => $url,
                 CURLOPT_RETURNTRANSFER => true,
@@ -79,16 +79,31 @@
         }
       }
     }else if($intent == "authenticationselection - custom - yes - otp"){
-      $mobile_number = $requestDecode->queryResult->parameters->Contact;
+      
       $otp = $requestDecode->queryResult->parameters->OTP;
+      // Get Data From Session Id 
+      $sql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
 
-      // Check OTP is Valid Or Not
-      $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' LIMIT 1";
       $result     = $conn->query($sql);
-      $row  = mysqli_fetch_assoc($result);
+      $aUserData  = mysqli_fetch_assoc($result);
 
-      if(count($row) == 1 && $row!= ""){
-        $message = "You are successfully authenticated now. You can now ask me regarding your account details";
+      if(count($aUserData) != 0 && $aUserData != ""){
+        $mobile_number = $aUserData['mobile_number'];
+        // Check OTP is Valid Or Not
+        $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' LIMIT 1";
+        $result     = $conn->query($sql);
+        $row  = mysqli_fetch_assoc($result);
+
+        if(count($row) == 1 && $row!= ""){
+          $message = "You are successfully authenticated now. You can now ask me regarding your account details";
+        }
+      }else{
+        $data['followupEventInput']['name'] = "recall";
+          $data['followupEventInput']['parameters']['Account_Number'] = '';
+          $data['followupEventInput']['parameters']['Contact'] = '';
+          $data['languageCode'] = "en-US";
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
       }
     }else if($intent == "Greeting"){
       
