@@ -151,10 +151,10 @@
             $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
             
             $result     = $conn->query($sql);
-            $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
+            $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
           }
         }else{
-          $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can speak in English and Hindi, which language would you be more comfortable with.";
+          $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact  in English and Hindi, which language would you be more comfortable with.";
         }
     }else if($intent == "BalanceRequest - yes"){
 
