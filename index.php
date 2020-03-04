@@ -72,12 +72,12 @@
 
             if($intent === "authenticationselection - custom"){
 
-              $message = "We have sent an OTP to your mobile number. Please tell me the OTP.";
+              $message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
 
               
             }else if($intent ==="add_details"){
               //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
-               $message = "We have sent an OTP to your mobile number. Please tell me the OTP.";
+               $message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
             }
         }
       }
@@ -113,7 +113,12 @@
           $result     = $conn->query($sql);
           
         }else{
-          $message = "OTP provided is not matching.Please say Hi for reprocess.";
+          $data['followupEventInput']['name'] = "reenterotp";
+          $data['followupEventInput']['parameters']['OTP'] = '';
+          $data['languageCode'] = "en-US";
+          $areenterotp = json_encode($data);
+          echo $areenterotp;exit;
+          //$message = "Sorry, the OTP you provided is not matching. Please provide me the correct OTP.";
         }
       }else{
           $data['followupEventInput']['name'] = "recall";
@@ -137,11 +142,11 @@
         //$current_time = "4:00 pm";
         $current_time = strtotime($current_time);
         if($current_time > strtotime("11:59 am") && $current_time < strtotime("3:59 pm")){
-          $greeting = "Good Afternoon";
+          $greeting = "Good Afternoon! ";
         }else if($current_time > strtotime("3:59 pm") && $current_time < strtotime("11:59 pm")){
-          $greeting = "Good Evening";
+          $greeting = "Good Evening! ";
         }else{
-          $greeting = "Good Morning";
+          $greeting = "Good Morning! ";
         }
        
         if(count($aUserData) > 0 && $aUserData !=""){
@@ -221,7 +226,7 @@
             $conn -> close();
           }
         }else{
-          $message = "Dear User Please tell home loan amount.";
+          $message = "Dear User Please provide home loan amount.";
         }
       }else{
           $data['followupEventInput']['name'] ="recall";
