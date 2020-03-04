@@ -113,7 +113,7 @@
           $result     = $conn->query($sql);
           
         }else{
-          $data['followupEventInput']['name'] = "reenterotp";
+          $data['followupEventInput']['name'] = "otpreenter";
           $data['followupEventInput']['parameters']['OTP'] = '';
           $data['languageCode'] = "en-US";
           $areenterotp = json_encode($data);
