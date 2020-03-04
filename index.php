@@ -81,7 +81,7 @@
             }
         }
       }
-    }else if($intent == "authenticationselection - custom - yes" || $intent = "reenterotp"){
+    }else if($intent == "authenticationselection - custom - yes"){
       
       $otp = $requestDecode->queryResult->parameters->OTP;
       // Get Data From Session Id 
@@ -113,12 +113,8 @@
           $result     = $conn->query($sql);
           
         }else{
-          $data['followupEventInput']['name'] = "otpreenter";
-          $data['followupEventInput']['parameters']['OTP'] = '';
-          $data['languageCode'] = "en-US";
-          $areenterotp = json_encode($data);
-          echo $areenterotp;exit;
-          //$message = "Sorry, the OTP you provided is not matching. Please provide me the correct OTP.";
+          
+          $message = "Sorry, the OTP you provided is not matching. Please provide me the correct OTP.";
         }
       }else{
           $data['followupEventInput']['name'] = "recall";
