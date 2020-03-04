@@ -108,13 +108,16 @@
           }
           
           // Delete All OTP
-          
           $deleteSql = "DELETE FROM validate_otp WHERE $mobile_number ='$mobile_number'";
           $result     = $conn->query($sql);
           
         }else{
-          
-          $message = "Sorry, the OTP you provided is not matching. Please provide me the correct OTP.";
+          $data['followupEventInput']['name'] = "recallotp";
+          $data['followupEventInput']['parameters']['OTP'] = '';
+          $data['languageCode'] = "en-US";
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
+          //$message = "Sorry, the OTP you provided is not matching. Please provide me the correct OTP.";
         }
       }else{
           $data['followupEventInput']['name'] = "recall";
