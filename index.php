@@ -81,7 +81,7 @@
             }
         }
       }
-    }else if($intent == "authenticationselection - custom - yes"){
+    }else if($intent == "authenticationselection - custom - yes" || $intent = "reenterotp"){
       
       $otp = $requestDecode->queryResult->parameters->OTP;
       // Get Data From Session Id 
