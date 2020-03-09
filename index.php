@@ -345,9 +345,9 @@
     }else if($intent == "LanguageSelection"){
     	$language = $requestDecode->queryResult->parameters->Language;
     	if($language === "Hindi"){
-    		$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
+    		//$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
     		$data = array (
-			    'fulfillmentText' => $message,
+			    //'fulfillmentText' => $message,
 			    'languageCode'=> "hi"
 			);
 
