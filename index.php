@@ -19,7 +19,7 @@
 
   $intent = $requestDecode->queryResult->intent->displayName;
   $languageCode = $requestDecode->queryResult->languageCode;
-  echo $languageCode;exit;
+  
   // For session Id
   $outputContexts = $requestDecode->queryResult->outputContexts[0]->name;
   $outputContextsArray = explode("/", $outputContexts);
@@ -75,7 +75,7 @@
 
 
             if($intent === "authenticationselection - custom" || $intent ==="add_details"){
-            	if($$languageCode != 'hi'){
+            	if($languageCode != 'hi'){
               		$message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
             	}else{
             		$message = "हमने आपके मोबाइल नंबर पर एक OTP भेजा है। कृपया मुझे ओटीपी प्रदान करें।";
