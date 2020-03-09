@@ -359,20 +359,6 @@
         echo $aBlankDetails;exit;
       }
       
-    }else if($intent == "LanguageSelection"){
-   
-    	if($languageCode === "Hindi"){
-    		$message = "";
-    		$data = array (
-			    'fulfillmentText' => $message,
-			    'languageCode'=> "hi"
-			);
-
-    		$aFinalDialogflowResponse = json_encode($data);
- 			echo $aFinalDialogflowResponse;
-    		exit;
-    	}
-	        
     }
   }
   // Dialogflow Response
