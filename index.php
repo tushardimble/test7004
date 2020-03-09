@@ -100,8 +100,12 @@
         $row  = mysqli_fetch_assoc($result);
         //echo"<pre>";print_r($row);exit;
         if(count($row) > 0 && $row!= ""){
-
-          $message = "You are successfully authenticated now. You can now ask me regarding your account details";
+        	if($language != "hi"){
+        		$message = "You are successfully authenticated now. You can now ask me regarding your account details";
+        	}else{
+        		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के विवरण के बारे में पूछ सकते हैं ";
+        	}
+          	
           $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' ORDER BY validate_otp_id DESC";
           
           $result     = $conn->query($sql);
