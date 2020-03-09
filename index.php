@@ -170,7 +170,7 @@
             	$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with." ;
             
         	}else{
-        		$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है! मैं अंग्रेजी और हिंदी में बातचीत कर सकता हूं, आप किस भाषा में अधिक सहज होंगे।";
+        		$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है! क्या आप आगे बढ़ना चाहोगे";
         	}
           }
         }else{
@@ -178,7 +178,7 @@
 	        	$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with." ;
 	        
 	    	}else{
-	    		$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है! मैं अंग्रेजी और हिंदी में बातचीत कर सकता हूं, आप किस भाषा में अधिक सहज होंगे।";
+	    		$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है! क्या आप आगे बढ़ना चाहोगे";
 	    	}
         }
     }else if($intent == "BalanceRequest - yes"){
