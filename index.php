@@ -18,7 +18,8 @@
   
 
   $intent = $requestDecode->queryResult->intent->displayName;
-
+  $languageCode = $requestDecode->queryResult->languageCode;
+  echo $languageCode;exit;
   // For session Id
   $outputContexts = $requestDecode->queryResult->outputContexts[0]->name;
   $outputContextsArray = explode("/", $outputContexts);
@@ -72,14 +73,13 @@
               $result = $conn->query($sql);
 
 
-            if($intent === "authenticationselection - custom"){
 
-              $message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
-
-              
-            }else if($intent ==="add_details"){
-              //$message = "You are successfully authenticated now. You can enquire about Account balance, Home Loan, Fixed Deposit or any other products of our bank";
-               $message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
+            if($intent === "authenticationselection - custom" || $intent ==="add_details"){
+            	if($$languageCode != 'hi'){
+              		$message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
+            	}else{
+            		$message = "हमने आपके मोबाइल नंबर पर एक OTP भेजा है। कृपया मुझे ओटीपी प्रदान करें।";
+            	}
             }
         }
       }
@@ -345,7 +345,7 @@
     }else if($intent == "LanguageSelection"){
     	$language = $requestDecode->queryResult->parameters->Language;
     	if($language === "Hindi"){
-    		$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
+    		$message = "";
     		$data = array (
 			    'fulfillmentText' => $message,
 			    'languageCode'=> "hi"
