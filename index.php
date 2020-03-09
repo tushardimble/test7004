@@ -1,5 +1,5 @@
 <?php
- 
+
   error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
@@ -150,7 +150,8 @@
         }else{
           $greeting = "Good Morning! ";
         }
-       
+        //$languageCode = $requestDecode->queryResult->languageCode;
+        //echo $languageCode;exit;
         if(count($aUserData) > 0 && $aUserData !=""){
           // Delete all previous session
           foreach ($aUserData as $key => $value) {
@@ -158,7 +159,8 @@
             $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
             
             $result     = $conn->query($sql);
-            $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
+
+            $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with." ;
           }
         }else{
           $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact  in English and Hindi, which language would you be more comfortable with.";
@@ -344,14 +346,12 @@
     }else if($intent == "LanguageSelection"){
     	$language = $requestDecode->queryResult->parameters->Language;
     	if($language == "Hindi"){
-    		$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
+    		$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
     		$data = array (
 			    'fulfillmentText' => $message,
-			    'languageCode' => 'hi'
+			    "languageCode": "hi"
 			);
-    		
     		$aFinalDialogflowResponse = json_encode($data);
-  
  			echo $aFinalDialogflowResponse;
     		exit;
     	}
