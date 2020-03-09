@@ -100,7 +100,7 @@
         $row  = mysqli_fetch_assoc($result);
         //echo"<pre>";print_r($row);exit;
         if(count($row) > 0 && $row!= ""){
-        	if($language != "hi"){
+        	if($languageCode != "hi"){
         		$message = "You are successfully authenticated now. You can now ask me regarding your account details";
         	}else{
         		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के विवरण के बारे में पूछ सकते हैं ";
@@ -356,8 +356,8 @@
       }
       
     }else if($intent == "LanguageSelection"){
-    	$language = $requestDecode->queryResult->parameters->Language;
-    	if($language === "Hindi"){
+   
+    	if($languageCode === "Hindi"){
     		$message = "";
     		$data = array (
 			    'fulfillmentText' => $message,
