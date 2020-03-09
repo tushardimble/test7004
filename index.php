@@ -47,7 +47,7 @@
         	if($languageCode != "hi"){
           		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
         	}else{
-        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?"
+        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
         	}
           	$conn -> close();
         }else{
@@ -157,8 +157,7 @@
         }else{
           $greeting = "Good Morning! ";
         }
-        //$languageCode = $requestDecode->queryResult->languageCode;
-        //echo $languageCode;exit;
+        
         if(count($aUserData) > 0 && $aUserData !=""){
           // Delete all previous session
           foreach ($aUserData as $key => $value) {
