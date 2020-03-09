@@ -103,7 +103,7 @@
         	if($languageCode != "hi"){
         		$message = "You are successfully authenticated now. You can now ask me regarding your account details";
         	}else{
-        		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के विवरण के बारे में पूछ सकते हैं ";
+        		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के बारे में पूछ सकते हैं ";
         	}
           	
           $sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' ORDER BY validate_otp_id DESC";
