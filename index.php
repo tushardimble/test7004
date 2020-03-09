@@ -33,7 +33,7 @@
       $mobile_number = $requestDecode->queryResult->parameters->Contact;
       $mobile_number = str_replace('-', '', $mobile_number);
       $mobile_number = str_replace(' ', '', $mobile_number);
-      echo $account_number;exit;
+      
       if($account_number != "" && $mobile_number != ""){
         // Check Entered Mobile Number is correct
         $sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
