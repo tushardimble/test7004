@@ -45,7 +45,11 @@
 
         if(count($data) == 0){
         	if($languageCode != "hi"){
+          		if($languageCode != "hi"){
           		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+        	}else{
+        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+        	}
         	}else{
         		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
         	}
@@ -200,11 +204,19 @@
           $data[] = $row;
         }
         if(count($data) == 0){
-          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+          	if($languageCode != "hi"){
+          		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+        	}else{
+        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+        	}
           $conn -> close();
         }else{
-          $message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
-          $conn -> close();
+        	if($languageCode != "hi"){
+          		$message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
+          	}else{
+          		$message = "Dear ".$data[0]['name'] . ",आपका अकाऊँट बैलेस ".$data[0]['account_balance']. " . मैं आपकी क्या मदद कर सकता हूं?";
+          	}
+          	$conn -> close();
         }
       }else{
         $data['followupEventInput']['name'] = "recall";
@@ -278,7 +290,11 @@
           }
           
           if(count($data) == 0){
-            $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+            if($languageCode != "hi"){
+          		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+        	}else{
+        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+        	}
             $conn -> close();
           }else{
             // Update FD Amount
@@ -326,7 +342,11 @@
           $data[] = $row;
         }
         if(count($data) == 0){
-          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+          if($languageCode != "hi"){
+          		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+        	}else{
+        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+        	}
           $conn -> close();
         }else{
           $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
