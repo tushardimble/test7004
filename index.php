@@ -1,5 +1,4 @@
 <?php
-
   error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta'); 
   $servername = "66.45.232.178";
@@ -345,14 +344,15 @@
       
     }else if($intent == "LanguageSelection"){
     	$language = $requestDecode->queryResult->parameters->Language;
-    	if($language == "Hindi"){
+    	if($language === "Hindi"){
     		$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
-      	$data = array (
-  			    'fulfillmentText' => $message,
-  			    "languageCode": "hi"
-  			);
+    		$data = array (
+			    'fulfillmentText' => $message,
+			    'languageCode'=> "hi"
+			);
+
     		$aFinalDialogflowResponse = json_encode($data);
- 			  echo $aFinalDialogflowResponse;
+ 			echo $aFinalDialogflowResponse;
     		exit;
     	}
 	        
