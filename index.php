@@ -347,7 +347,7 @@
     		$message = "<speak>हिंदी भाषा चुनने के लिए बहुत-बहुत धन्यवाद। मैं आपको हमारे बँक अकाऊंट और सामान्य प्रश्नों में मदत कर सकती हूँ.</speak>";
     		$data = array (
 			    'fulfillmentText' => $message,
-			    'languageCode' => 'hi-IN'
+			    'languageCode' => 'hi'
 			);
     		
     		$aFinalDialogflowResponse = json_encode($data);
