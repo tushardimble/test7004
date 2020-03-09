@@ -44,8 +44,12 @@
         }
 
         if(count($data) == 0){
-          $message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
-          $conn -> close();
+        	if($languageCode != "hi"){
+          		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+        	}else{
+        		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?"
+        	}
+          	$conn -> close();
         }else{
             $sql = "INSERT INTO session_data(sessionId,account_number,mobile_number) VALUES ('$sessionId','$account_number','$mobile_number')";
             $result = $conn->query($sql);
