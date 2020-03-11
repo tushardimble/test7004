@@ -39,12 +39,14 @@
   		$sessionSql = "SELECT * FROM session_data WHERE sessionId = '$sessionId' ORDER BY session_data_id DESC LIMIT 1";
   		$result     = $conn->query($sessionSql);
   		$aUserData  = mysqli_fetch_assoc($result);
-
+  		
   		if(count($aUserData) != 0 && $aUserData != ""){
-  			
-  			$isSessionAvailable = "Yes";
+  			if($aUserData['is_validate'] == 1){
+  				$isSessionAvailable = "Yes";
+  			}else{
+  				$isSessionAvailable = "NotValidate";
+  			}
   		}else{
-  			
   			$isSessionAvailable = "No";
   		}
 
@@ -67,14 +69,21 @@
 		        }else{
 		        	$accountAndMobileNumberExist = "Yes";
 		        }
-		    }else{
+		    }else if($isSessionAvailable == "No"){
 		    	$data['followupEventInput']['name'] ="recall";
 		        $data['followupEventInput']['parameters']['Account_Number']='';
 		        $data['followupEventInput']['parameters']['Contact']='';
 		        $data['languageCode']= "en-US";
 		        $aBlankDetails = json_encode($data);
 		        echo $aBlankDetails;exit;
-		    }
+		    }else{
+  				// If OTP is wrong then reenter OTP
+    			$data['followupEventInput']['name'] = "recallotp";
+		        $data['followupEventInput']['parameters']['OTP'] = '';
+		        $data['languageCode'] = "en-US";
+		        $aBlankDetails = json_encode($data);
+		        echo $aBlankDetails;exit;
+  			}
   		}
   		/* Part 3
   			Intent wise code
@@ -149,7 +158,7 @@
   		}else if($intent == "authenticationselection - custom - yes" || $intent == "reenterotp"){
 
   			$otp = $requestDecode->queryResult->parameters->OTP;
-
+  			
   			if($isSessionAvailable == "Yes"){
   				$mobile_number = $aUserData['mobile_number'];
   				// Check OTP is Valid Or Not
@@ -158,6 +167,12 @@
         		$row  = mysqli_fetch_assoc($result);
 
         		if(count($row) > 0 && $row != ""){
+        			// Update Validation flag as 1
+        			// 0 Means Not Validate and 1 is for validate
+        			$updatevalidationFlag = "UPDATE session_data SET is_validate='1' WHERE sessionId='$sessionId'";
+        			
+        			$updatevalidationFlagresult = $conn->query($updatevalidationFlag);
+
         			// Delete All OTP
           			$deleteSql = "DELETE FROM validate_otp WHERE mobile_number ='$mobile_number'";
           			$result     = $conn->query($deleteSql);
@@ -178,13 +193,20 @@
 			        $aBlankDetails = json_encode($data);
 			        echo $aBlankDetails;exit;
         		}
-  			}else{
+  			}else if($isSessionAvailable == "No"){
   				$data['followupEventInput']['name'] = "recall";
           		$data['followupEventInput']['parameters']['Account_Number'] = '';
           		$data['followupEventInput']['parameters']['Contact'] = '';
           		$data['languageCode'] = "en-US";
           		$aBlankDetails = json_encode($data);
           		echo $aBlankDetails;exit;
+  			}else{
+  				// If OTP is wrong then reenter OTP
+    			$data['followupEventInput']['name'] = "recallotp";
+		        $data['followupEventInput']['parameters']['OTP'] = '';
+		        $data['languageCode'] = "en-US";
+		        $aBlankDetails = json_encode($data);
+		        echo $aBlankDetails;exit;
   			}
   		}else if($intent == "Greeting"){
 
@@ -210,12 +232,19 @@
 	          	}else{
 	          		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
 	          	}
-  			}else{
+  			}else if($isSessionAvailable == "No"){
   				if($languageCode == 'hi'){
   					$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है! क्या आप आगे बढ़ना चाहोगे";
 	  	    	}else{
 	  	    		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
 	  	    	}
+  			}else{
+  				// If OTP is wrong then reenter OTP
+    			$data['followupEventInput']['name'] = "recallotp";
+		        $data['followupEventInput']['parameters']['OTP'] = '';
+		        $data['languageCode'] = "en-US";
+		        $aBlankDetails = json_encode($data);
+		        echo $aBlankDetails;exit;
   			}
   		}else if($intent == "BalanceRequest - yes"){
   			if($isSessionAvailable == "Yes"){
@@ -241,13 +270,20 @@
 		          		$message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
 		          	}
 		        }
-  			}else{
+  			}else if($isSessionAvailable == "No"){
   				$data['followupEventInput']['name'] = "recall";
           		$data['followupEventInput']['parameters']['Account_Number'] = '';
           		$data['followupEventInput']['parameters']['Contact'] = '';
           		$data['languageCode'] = "en-US";
           		$aBlankDetails = json_encode($data);
           		echo $aBlankDetails;exit;
+  			}else{
+  				// If OTP is wrong then reenter OTP
+    			$data['followupEventInput']['name'] = "recallotp";
+		        $data['followupEventInput']['parameters']['OTP'] = '';
+		        $data['languageCode'] = "en-US";
+		        $aBlankDetails = json_encode($data);
+		        echo $aBlankDetails;exit;
   			}
   		}else if($intent == "HomeLoan"){
           	if($accountAndMobileNumberExist == "No"){
