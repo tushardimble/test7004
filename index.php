@@ -130,7 +130,7 @@
               		curl_close($curl);
 
               		// Delete Previous OTP
-          			$deleteSql = "DELETE FROM validate_otp WHERE $mobile_number ='$mobile_number'";
+          			$deleteSql = "DELETE FROM validate_otp WHERE mobile_number ='$mobile_number'";
           			$result     = $conn->query($sql);
 
               		// Insert OTP for validation Purpose
@@ -166,7 +166,8 @@
 		        	}
 
           			// Delete All OTP
-          			$deleteSql = "DELETE FROM validate_otp WHERE $mobile_number ='$mobile_number'";
+          			$deleteSql = "DELETE FROM validate_otp WHERE mobile_number ='$mobile_number'";
+          			
           			$result     = $conn->query($sql);
 
         		}else{
