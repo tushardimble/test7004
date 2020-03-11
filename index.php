@@ -53,7 +53,7 @@
   			Check Account number and mobile in system
   		*/
   		if($intent == "HomeLoan" || $intent == "openFDaccount" || $intent == "TicketDetails"){
-  			if(if($isSessionAvailable == "Yes"){
+  			if($isSessionAvailable == "Yes"){
   				$account_number = $aUserData['account_number'];
         		$mobile_number = $aUserData['mobile_number'];
 	  			$sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
