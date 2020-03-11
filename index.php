@@ -238,13 +238,6 @@
 	  	    	}else{
 	  	    		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
 	  	    	}
-  			}else{
-  				// If OTP is wrong then reenter OTP
-    			$data['followupEventInput']['name'] = "recallotp";
-		        $data['followupEventInput']['parameters']['OTP'] = '';
-		        $data['languageCode'] = "en-US";
-		        $aBlankDetails = json_encode($data);
-		        echo $aBlankDetails;exit;
   			}
   		}else if($intent == "BalanceRequest - yes"){
   			if($isSessionAvailable == "Yes"){
