@@ -87,7 +87,7 @@
       		$mobile_number = str_replace(' ', '', $mobile_number);
       		if($account_number != "" && $mobile_number != ""){
       			// Check Entered Mobile Number is correct
-        		 // Check Entered Mobile Number is correct
+        		 
         		$sql = "SELECT vcd.mobile FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856= '$account_number' AND  vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
         		
 		        $result = $conn->query($sql);
@@ -131,7 +131,7 @@
 
               		// Delete Previous OTP
           			$deleteSql = "DELETE FROM validate_otp WHERE mobile_number ='$mobile_number'";
-          			$result     = $conn->query($sql);
+          			$result     = $conn->query($deleteSql);
 
               		// Insert OTP for validation Purpose
               		$sql = "INSERT INTO validate_otp(mobile_number,otp) VALUES ('$mobile_number','$otp')";
@@ -158,6 +158,9 @@
         		$row  = mysqli_fetch_assoc($result);
 
         		if(count($row) > 0 && $row != ""){
+        			// Delete All OTP
+          			$deleteSql = "DELETE FROM validate_otp WHERE mobile_number ='$mobile_number'";
+          			$result     = $conn->query($deleteSql);
         			// If Valid OTP
         			if($languageCode != "hi"){
 		        		$message = "You are successfully authenticated now. You can now ask me regarding your account details";
@@ -165,10 +168,7 @@
 		        		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के बारे में पूछ सकते हैं ";
 		        	}
 
-          			// Delete All OTP
-          			$deleteSql = "DELETE FROM validate_otp WHERE mobile_number ='$mobile_number'";
           			
-          			$result     = $conn->query($sql);
 
         		}else{
         			// If OTP is wrong then reenter OTP
