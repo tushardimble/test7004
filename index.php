@@ -222,7 +222,7 @@
 	        }
 
 
-  			if($isSessionAvailable == "Yes"){
+  			if($isSessionAvailable == "Yes" || $isSessionAvailable == "NotValidate"){
   				$sessionId = $sessionId;
 	            $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
 	           
