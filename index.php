@@ -159,7 +159,7 @@
 
   			$otp = $requestDecode->queryResult->parameters->OTP;
   			
-  			if($isSessionAvailable == "Yes"){
+  			if($isSessionAvailable == "Yes" || $isSessionAvailable == "NotValidate"){
   				$mobile_number = $aUserData['mobile_number'];
   				// Check OTP is Valid Or Not
         		$sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' ORDER BY validate_otp_id DESC LIMIT 1";
@@ -200,13 +200,6 @@
           		$data['languageCode'] = "en-US";
           		$aBlankDetails = json_encode($data);
           		echo $aBlankDetails;exit;
-  			}else{
-  				// If OTP is wrong then reenter OTP
-    			$data['followupEventInput']['name'] = "recallotp";
-		        $data['followupEventInput']['parameters']['OTP'] = '';
-		        $data['languageCode'] = "en-US";
-		        $aBlankDetails = json_encode($data);
-		        echo $aBlankDetails;exit;
   			}
   		}else if($intent == "Greeting"){
 
