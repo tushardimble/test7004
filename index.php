@@ -94,6 +94,7 @@
       		$mobile_number = $requestDecode->queryResult->parameters->Contact;
       		$mobile_number = str_replace('-', '', $mobile_number);
       		$mobile_number = str_replace(' ', '', $mobile_number);
+
       		if($account_number != "" && $mobile_number != ""){
       			// Check Entered Mobile Number is correct
         		 
@@ -159,7 +160,7 @@
 
   			$otp = $requestDecode->queryResult->parameters->OTP;
   			
-  			if($isSessionAvailable == "Yes" || $isSessionAvailable == "NotValidate"){
+  			if($isSessionAvailable == "Yes"){
   				$mobile_number = $aUserData['mobile_number'];
   				// Check OTP is Valid Or Not
         		$sql = "SELECT * FROM validate_otp WHERE $mobile_number ='$mobile_number' AND otp='$otp' ORDER BY validate_otp_id DESC LIMIT 1";
@@ -183,23 +184,16 @@
 		        		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के बारे में पूछ सकते हैं ";
 		        	}
 
-          			
-
         		}else{
-        			// If OTP is wrong then reenter OTP
-        			$data['followupEventInput']['name'] = "recallotp";
-			        $data['followupEventInput']['parameters']['OTP'] = '';
-			        $data['languageCode'] = "en-US";
-			        $aBlankDetails = json_encode($data);
-			        echo $aBlankDetails;exit;
+        			
         		}
-  			}else if($isSessionAvailable == "No"){
-  				$data['followupEventInput']['name'] = "recall";
-          		$data['followupEventInput']['parameters']['Account_Number'] = '';
-          		$data['followupEventInput']['parameters']['Contact'] = '';
-          		$data['languageCode'] = "en-US";
-          		$aBlankDetails = json_encode($data);
-          		echo $aBlankDetails;exit;
+  			}else{
+  				// If OTP is wrong then reenter OTP
+    			$data['followupEventInput']['name'] = "recallotp";
+		        $data['followupEventInput']['parameters']['OTP'] = '';
+		        $data['languageCode'] = "en-US";
+		        $aBlankDetails = json_encode($data);
+		        echo $aBlankDetails;exit;
   			}
   		}else if($intent == "Greeting"){
 
