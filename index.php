@@ -187,6 +187,7 @@
           		echo $aBlankDetails;exit;
   			}
   		}else if($intent == "Greeting"){
+
   			// Greeting
   			$current_time = date("h:i a");
   			$current_time = strtotime($current_time);
@@ -200,11 +201,10 @@
 
 
   			if($isSessionAvailable == "Yes"){
-  				foreach ($aUserData as $key => $value) {
-		            $sessionId = $value['sessionId'];
-		            $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
-		            $result     = $conn->query($sql);
-		        }
+  				$sessionId = $sessionId;
+	            $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
+	           
+	            $result     = $conn->query($sql);
 		        if($languageCode == 'hi'){
 		        	$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है! क्या आप आगे बढ़ना चाहोगे";
 	          	}else{
