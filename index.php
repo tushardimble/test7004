@@ -310,17 +310,25 @@
           	}else{
           		$fd_amount        	= $requestDecode -> queryResult -> parameters -> FDAmount;
 	        	$locking_period   	= $requestDecode -> queryResult -> parameters -> LockingPeriod;
-          		// Update FD Amount
-	            $fd_amount = str_replace(' ', '', $fd_amount);
-	            $locking_period = str_replace(' ', '', $locking_period);
-	            $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
-	            $result = $conn->query($sql);
-	            if($languageCode == "hi"){
-            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकता हूं?";
-            	}else{
-            		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
-            	}
-	            
+	        	if($fd_amount != "" && $locking_period != ""){
+	          		// Update FD Amount
+		            $fd_amount = str_replace(' ', '', $fd_amount);
+		            $locking_period = str_replace(' ', '', $locking_period);
+		            $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
+		            $result = $conn->query($sql);
+		            if($languageCode == "hi"){
+	            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकता हूं?";
+	            	}else{
+	            		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
+	            	}
+	            }else{
+	            	$data['followupEventInput']['name'] = "fdreenter";
+	          		$data['followupEventInput']['parameters']['FDAmount'] = '';
+	          		$data['followupEventInput']['parameters']['LockingPeriod'] = '';
+	          		$data['languageCode'] = "en-US";
+	          		$aBlankDetails = json_encode($data);
+	          		echo $aBlankDetails;exit;
+	            }
           	}
   		}else if($intent == "TicketDetails"){
 		        if($accountAndMobileNumberExist == "No"){
