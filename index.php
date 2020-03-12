@@ -55,7 +55,7 @@
   			Check Account number and mobile in system
   		*/
   		if($intent == "HomeLoan" || $intent == "openFDaccount" || $intent == "TicketDetails"){
-  			
+
   			if($isSessionAvailable == "Yes"){
   				$account_number = $aUserData['account_number'];
         		$mobile_number = $aUserData['mobile_number'];
@@ -260,7 +260,7 @@
 		        	}
 		        }else{
 		        	if($languageCode == "hi"){
-		        		$message = "Dear ".$data[0]['name'] . ",आपका अकाऊँट बैलेस ".$data[0]['account_balance']. " . मैं आपकी क्या मदद कर सकता हूं?";
+		        		$message = "Dear ".$data[0]['name'] . ",आपका अकाऊँट बैलेस ".$data[0]['account_balance']. " है. मैं आपकी क्या मदद कर सकता हूं?";
 		          	}else{
 		          		$message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
 		          	}
