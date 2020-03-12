@@ -55,6 +55,7 @@
   			Check Account number and mobile in system
   		*/
   		if($intent == "HomeLoan" || $intent == "openFDaccount" || $intent == "TicketDetails"){
+  			
   			if($isSessionAvailable == "Yes"){
   				$account_number = $aUserData['account_number'];
         		$mobile_number = $aUserData['mobile_number'];
@@ -148,7 +149,7 @@
               		$result = $conn->query($sql);
 
               		if($languageCode == 'hi'){
-              			$message = "हमने आपके मोबाइल नंबर पर एक OTP भेजा है। कृपया मुझे ओटीपी प्रदान करें।";
+              			$message = "हमने आपके मोबाइल नंबर पर एक ओटीपी भेजा है। कृपया मुझे ओटीपी प्रदान करें।";
 	            	}else{
 	            		$message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
 	            	}
