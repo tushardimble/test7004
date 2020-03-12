@@ -332,7 +332,7 @@
           	}
   		}else if($intent == "TicketDetails"){
 		        if($accountAndMobileNumberExist == "No"){
-		          if($languageCode == "hi"){
+		          	if($languageCode == "hi"){
 		          		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
 		        	}else{
 		        		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
@@ -350,10 +350,19 @@
 		            }
 		            
 		            if(count($data) == 0){
-		            	$message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
+		            	if($languageCode == "hi"){
+			          		$message = "क्षमा करें हमें इस टिकट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+			        	}else{
+			        		$message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
+			        	}
+		            	
 		            }else{
-		              
-		              	$message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
+		              	if($languageCode == "hi"){
+			          		$$message = "Dear ". $data[0]['name'] .",आपके टिकट ".$ticket_number ." का स्टेटस  ". $data[0]['status'].". मैं आपकी क्या मदद कर सकता हूं?";
+			        	}else{
+			        		$message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
+			        	}
+		              	
 		              	
 		            }
 		          }
