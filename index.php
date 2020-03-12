@@ -293,7 +293,12 @@
             	$home_loan_amount = str_replace(' ', '', $home_loan_amount);
             	$sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
             	$result = $conn->query($sql);
-            	$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
+            	if($languageCode == "hi"){
+            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को विवरण दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी क्या मदद कर सकता हूं?";
+            	}else{
+            		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
+            	}
+            	
           	}
   		}else if($intent == "openFDaccount"){
 	        if($accountAndMobileNumberExist == "No"){
@@ -310,7 +315,11 @@
 	            $locking_period = str_replace(' ', '', $locking_period);
 	            $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
 	            $result = $conn->query($sql);
-	            $message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out with the various Fixed Deposit rates and options. What else I can help you with?";
+	            if($languageCode == "hi"){
+            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को विवरण दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी क्या मदद कर सकता हूं?";
+            	}else{
+            		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
+            	}
 	            
           	}
   		}else if($intent == "TicketDetails"){
@@ -334,7 +343,6 @@
 		            
 		            if(count($data) == 0){
 		            	$message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
-		              	
 		            }else{
 		              
 		              	$message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
