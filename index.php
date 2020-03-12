@@ -111,7 +111,7 @@
 		        if(count($data) == 0 ){
 		        	if($languageCode == "hi"){
 
-	              		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+	              		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
 	            	}else{
 	            		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
 	            	}
@@ -149,7 +149,7 @@
               		$result = $conn->query($sql);
 
               		if($languageCode == 'hi'){
-              			$message = "हमने आपके मोबाइल नंबर पर एक ओटीपी भेजा है। कृपया मुझे ओटीपी प्रदान करें।";
+              			$message = "हमने आपके मोबाइल नंबर पर एक ओटीपी भेजा है। कृपया मुझे ओटीपी नंबर बताये|";
 	            	}else{
 	            		$message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
 	            	}
@@ -214,11 +214,25 @@
   			$current_time = date("h:i a");
   			$current_time = strtotime($current_time);
 	        if($current_time > strtotime("11:59 am") && $current_time < strtotime("3:59 pm")){
-	          $greeting = "Good Afternoon! ";
+	        	if($languageCode == 'hi'){
+	          		$greeting = "नमस्कार";
+	          	}else{
+	          		$greeting = "Good Afternoon! ";
+	          	}
 	        }else if($current_time > strtotime("3:59 pm") && $current_time < strtotime("11:59 pm")){
-	          $greeting = "Good Evening! ";
+	        	if($languageCode == 'hi'){
+	          		$greeting = "शुभ संध्या";
+	          	}else{
+	          		$greeting = "Good Evening! ";
+	          	}
+	          
 	        }else{
-	          $greeting = "Good Morning! ";
+	        	if($languageCode == 'hi'){
+	          		$greeting = "शुभ प्रभात";
+	          	}else{
+	          		$greeting = "Good Morning! ";
+	          	}
+	          
 	        }
 
 
@@ -228,14 +242,14 @@
 	           
 	            $result     = $conn->query($sql);
 		        if($languageCode == 'hi'){
-		        	$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
+		        	$message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
 	          	}else{
 	          		//$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
 	          		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
 	          	}
   			}else if($isSessionAvailable == "No"){
   				if($languageCode == 'hi'){
-  					$message = $greeting . " हाय मैं Conneqt बैंक मित्र हूं। Conneqt बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
+  					$message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
 	  	    	}else{
 	  	    		// $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
 	  	    		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
@@ -254,13 +268,13 @@
 
 		        if(count($data) == 0){
 		          	if($languageCode == "hi"){
-		          		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+		          		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
 		        	}else{
 		        		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
 		        	}
 		        }else{
 		        	if($languageCode == "hi"){
-		        		$message = "Dear ".$data[0]['name'] . ",आपका अकाऊँट बैलेस ".$data[0]['account_balance']. " है. मैं आपकी क्या मदद कर सकता हूं?";
+		        		$message = "Dear ".$data[0]['name'] . ",आपका अकाऊँट बैलेस ".$data[0]['account_balance']. " है. मैं आपकी क्या मदद कर सकती  हूं?";
 		          	}else{
 		          		$message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
 		          	}
@@ -283,7 +297,7 @@
   		}else if($intent == "HomeLoan"){
           	if($accountAndMobileNumberExist == "No"){
             	if($languageCode == "hi"){
-          			$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+          			$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
         		}else{
         			$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
         		}
@@ -294,7 +308,7 @@
             	$sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
             	$result = $conn->query($sql);
             	if($languageCode == "hi"){
-            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकता हूं?";
+            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकती  हूं?";
             	}else{
             		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
             	}
@@ -303,7 +317,7 @@
   		}else if($intent == "openFDaccount"){
 	        if($accountAndMobileNumberExist == "No"){
             	if($languageCode == "hi"){
-          			$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+          			$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
         		}else{
         			$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
         		}
@@ -317,7 +331,7 @@
 		            $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
 		            $result = $conn->query($sql);
 		            if($languageCode == "hi"){
-	            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकता हूं?";
+	            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकती  हूं?";
 	            	}else{
 	            		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
 	            	}
@@ -333,7 +347,7 @@
   		}else if($intent == "TicketDetails"){
 		        if($accountAndMobileNumberExist == "No"){
 		          	if($languageCode == "hi"){
-		          		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+		          		$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
 		        	}else{
 		        		$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
 		        	}
@@ -351,14 +365,14 @@
 		            
 		            if(count($data) == 0){
 		            	if($languageCode == "hi"){
-			          		$message = "क्षमा करें हमें इस टिकट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकता हूं?";
+			          		$message = "क्षमा करें हमें इस टिकट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
 			        	}else{
 			        		$message = "Sorry we could not find any details against this Ticket number and Mobile number. What else I can help you with?";
 			        	}
 		            	
 		            }else{
 		              	if($languageCode == "hi"){
-			          		$$message = "Dear ". $data[0]['name'] .",आपके टिकट ".$ticket_number ." का स्टेटस  ". $data[0]['status'].". मैं आपकी क्या मदद कर सकता हूं?";
+			          		$$message = "Dear ". $data[0]['name'] .",आपके टिकट ".$ticket_number ." का स्टेटस  ". $data[0]['status'].". मैं आपकी क्या मदद कर सकती  हूं?";
 			        	}else{
 			        		$message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
 			        	}
