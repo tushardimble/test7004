@@ -294,7 +294,7 @@
             	$sql = "UPDATE vtiger_contactscf SET cf_860='$home_loan_amount' WHERE cf_856= $account_number";
             	$result = $conn->query($sql);
             	if($languageCode == "hi"){
-            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को विवरण दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी क्या मदद कर सकता हूं?";
+            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकता हूं?";
             	}else{
             		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
             	}
@@ -316,7 +316,7 @@
 	            $sql = "UPDATE vtiger_contactscf SET cf_866='$fd_amount' , cf_868='$locking_period' WHERE cf_856= $account_number";
 	            $result = $conn->query($sql);
 	            if($languageCode == "hi"){
-            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को विवरण दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी क्या मदद कर सकता हूं?";
+            		$message = "डिटेल देने के लिए धन्यवाद ! मैंने अपनी टीम को डिटेल  दे दिया है, और हमारा एक प्रतिनिधि शीघ्र ही आपकी मदद करने के लिए आपके पास पहुंच जाएगा। मैं आपकी और क्या मदद कर सकता हूं?";
             	}else{
             		$message = "Thank you for the details! I have passed on the details to our team, and one of our representative would reach out to you shortly to help you out. What else I can help you with?";
             	}
