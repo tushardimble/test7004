@@ -373,7 +373,7 @@
 		            	
 		            }else{
 		              	if($languageCode == "hi"){
-			          		$$message = "Dear ". $data[0]['name'] .",आपके टिकट ".$ticket_number ." का स्टेटस  ". $data[0]['status'].". मैं आपकी क्या मदद कर सकती  हूं?";
+			          		$message = "Dear ". $data[0]['name'] .",आपके टिकट ".$ticket_number ." का स्टेटस  ". $data[0]['status'].". मैं आपकी क्या मदद कर सकती  हूं?";
 			        	}else{
 			        		$message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
 			        	}
