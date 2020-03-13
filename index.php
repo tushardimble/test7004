@@ -389,7 +389,7 @@
   		$message = "Something went wrong";
   	}
 
-  	$message =  "<b>".$message."</b>";
+  	
   	// Send Respose to Dialogflow fulfillment
   	$data = array (
     	'fulfillmentText' => $message
