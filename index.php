@@ -221,9 +221,9 @@
 	          	}
 	        }else if($current_time > strtotime("3:59 pm") && $current_time < strtotime("11:59 pm")){
 	        	if($languageCode == 'hi'){
-	          		$greeting = "<b style='color:red'>शुभ संध्या";
+	          		$greeting = "शुभ संध्या";
 	          	}else{
-	          		$greeting = "<b style='color:red'>Good Evening!</b> ";
+	          		$greeting = "Good Evening! ";
 	          	}
 	          
 	        }else{
