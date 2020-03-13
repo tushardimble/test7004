@@ -223,7 +223,7 @@
 	        	if($languageCode == 'hi'){
 	          		$greeting = "<b style='color:red'>शुभ संध्या";
 	          	}else{
-	          		$greeting = "<b style='color:red'>Good Evening! ";
+	          		$greeting = "<b style='color:red'>Good Evening!</b> ";
 	          	}
 	          
 	        }else{
