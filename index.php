@@ -238,15 +238,16 @@
 
   			if($isSessionAvailable == "Yes" || $isSessionAvailable == "NotValidate"){
   				$sessionId = $sessionId;
-	            $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
+	        $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
 	           
-	            $result     = $conn->query($sql);
-		        if($languageCode == 'hi'){
-		        	$message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
-	          	}else{
+	        $result     = $conn->query($sql);
+		      if($languageCode == 'hi'){
+		        $message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
+	        }else{
 	          		//$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
-	          		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
-	          	}
+	          $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
+	        }
+
   			}else if($isSessionAvailable == "No"){
   				if($languageCode == 'hi'){
   					$message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
@@ -388,12 +389,12 @@
   		$message = "Something went wrong";
   	}
 
-  	
+  	$message =  "<b>".$message."</b>";
   	// Send Respose to Dialogflow fulfillment
   	$data = array (
     	'fulfillmentText' => $message
   	);
-  	$aFinalDialogflowResponse = json_encode($data);
+  	$aFinalDialogflowResponse = json_encode($data,JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
   	echo $aFinalDialogflowResponse;
   	$conn -> close();
 ?>
