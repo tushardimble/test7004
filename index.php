@@ -215,20 +215,20 @@
   			$current_time = strtotime($current_time);
 	        if($current_time > strtotime("11:59 am") && $current_time < strtotime("3:59 pm")){
 	        	if($languageCode == 'hi'){
-	          		$greeting = "नमस्कार";
+	          		$greeting = "नमस्कार! ";
 	          	}else{
 	          		$greeting = "Good Afternoon! ";
 	          	}
 	        }else if($current_time > strtotime("3:59 pm") && $current_time < strtotime("11:59 pm")){
 	        	if($languageCode == 'hi'){
-	          		$greeting = "शुभ संध्या";
+	          		$greeting = "<b style='color:red'>शुभ संध्या";
 	          	}else{
-	          		$greeting = "Good Evening! ";
+	          		$greeting = "<b style='color:red'>Good Evening! ";
 	          	}
 	          
 	        }else{
 	        	if($languageCode == 'hi'){
-	          		$greeting = "शुभ प्रभात";
+	          		$greeting = "शुभ प्रभात! ";
 	          	}else{
 	          		$greeting = "Good Morning! ";
 	          	}
@@ -356,14 +356,16 @@
 		          $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
 		          $ticket_number = explode(" ",$ticket_number);
 		          $ticket_number = $ticket_number[1];
+
 		          if($ticket_number != "" && $mobile_number != ""){
 		            $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
+
 		            $data = array();
 		            $result = $conn->query($sql);
 		            while($row =mysqli_fetch_assoc($result)) {
 		              	$data[] = $row;
 		            }
-		            
+		           
 		            if(count($data) == 0){
 		            	if($languageCode == "hi"){
 			          		$message = "क्षमा करें हमें इस टिकट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
@@ -377,8 +379,6 @@
 			        	}else{
 			        		$message = "Dear ". $data[0]['name'] .",current status of your ticket ".$ticket_number ." is ". $data[0]['status'].". What else I can help you with?";
 			        	}
-		              	
-		              	
 		            }
 		          }
 		        }
