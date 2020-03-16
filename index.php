@@ -8,9 +8,9 @@
 	date_default_timezone_set('Asia/Calcutta');
 	// DB Credentials which is hosting on Plesk Server
 	$servername = "66.45.232.178";
-  	$username 	= "axisbankcrm2";
-  	$password 	= "axisbankcrm2";
-  	$dbname 	= "axisbankcrm2";
+  	$username 	= "axisbankcrm3";
+  	$password 	= "axisbankcrm3";
+  	$dbname 	= "axisbankcrm3";
   	$data 		= array();
   	// Connect with Db 
   	$conn = new mysqli($servername, $username, $password, $dbname);
