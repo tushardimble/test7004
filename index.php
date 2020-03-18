@@ -357,8 +357,8 @@
 		          
 		        }else{
 		          $ticket_number   = $requestDecode->queryResult->parameters->TicketNumber;
-		          $ticket_number = explode(" ",$ticket_number);
-		          $ticket_number = $ticket_number[1];
+		          //$ticket_number = explode(" ",$ticket_number);
+		          //$ticket_number = $ticket_number[1];
 
 		          if($ticket_number != "" && $mobile_number != ""){
 		            $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticketid='$ticket_number' ORDER BY vtt.ticketid DESC";
