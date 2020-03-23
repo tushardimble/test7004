@@ -68,7 +68,7 @@
 		        	$accountAndMobileNumberExist = "No";
 		        }else{
 		        	$iContactid = $data[0]['contactid'];
-
+		        	$sContactname = $data[0]['name'];
 		        	$accountAndMobileNumberExist = "Yes";
 		        }
 		    }else if($isSessionAvailable == "No"){
@@ -438,7 +438,7 @@
 	  			$sqlTCF = "INSERT INTO vtiger_ticketcf SET ticketid=$cesT";
 				$resTCF = $conn->query($sqlTCF);
 				$conn -> close();
-				$message = "Hi Your ticket TK ". $cesT ." is successfully created. We will try to resolve the ticket as soon as possible and will send updates on your ticket via SMS. You can also again come and check the status of the ticket.";
+				$message = "Dear ". $sContactname .", your ticket TK ". $cesT ." is successfully created. We will try to resolve the ticket as soon as possible and will send updates on your ticket via SMS. You can also again come and check the status of the ticket.";
 			}
 
   		}
