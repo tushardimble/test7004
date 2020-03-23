@@ -19,7 +19,6 @@
   	if ($conn->connect_error) {
     	die("Connection failed: " . $conn->connect_error);
   	}
-
   	// Get Json Input from Dialogflow
   	$request 		= file_get_contents('php://input');
   	$requestDecode 	= json_decode($request);
@@ -54,12 +53,12 @@
   			Part 2 
   			Check Account number and mobile in system
   		*/
-  		if($intent == "HomeLoan" || $intent == "openFDaccount" || $intent == "TicketDetails"){
+  		if($intent == "HomeLoan" || $intent == "openFDaccount" || $intent == "TicketDetails" || $intent == "createTicket"){
 
   			if($isSessionAvailable == "Yes"){
   				$account_number = $aUserData['account_number'];
         		$mobile_number = $aUserData['mobile_number'];
-	  			$sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+	  			$sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name ,vcd.contactid, vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
 	        	$result = $conn->query($sql);
 		        while($row =mysqli_fetch_assoc($result)) {
 		          $data[] = $row;
@@ -68,6 +67,8 @@
 		        if(count($data) == 0){
 		        	$accountAndMobileNumberExist = "No";
 		        }else{
+		        	$iContactid = $data[0]['contactid'];
+
 		        	$accountAndMobileNumberExist = "Yes";
 		        }
 		    }else if($isSessionAvailable == "No"){
@@ -386,6 +387,60 @@
 		          }
 		        }
   			
+  		}else if($intent == "createTicket"){
+  			if($accountAndMobileNumberExist == "No"){
+            	if($languageCode == "hi"){
+          			$message = "क्षमा करें हमें इस अकाऊँट नंबर और मोबाइल नंबर के खिलाफ कोई विवरण नहीं मिला। मैं आपकी क्या मदद कर सकती  हूं?";
+        		}else{
+        			$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
+        		}
+          	}else{
+
+          		$
+	  			//Generate Ticket
+				$sqlCEST 	= "SELECT id FROM vtiger_crmentity_seq";
+
+				$resultCEST = $conn->query($sqlCEST);
+	  			$aVCrmSeq  = mysqli_fetch_assoc($resultCEST);
+	  			$cesT = $aVCrmSeq['id']+1;
+
+	  			$sqlCESUT = "UPDATE vtiger_crmentity_seq SET id=$cesT";
+	  			$resCESUT = $conn->query($sqlCESUT);
+
+	  			$sHelpDesk = "HelpDesk";
+	  			$sqlLST = "SELECT prefix,cur_id FROM vtiger_modentity_num WHERE semodule='$sHelpDesk'";
+	  			//echo $sqlLST;exit;
+	  			$resLST = $conn->query($sqlLST);
+	  			$detLST = mysqli_fetch_assoc($resLST);
+	  			
+
+	  			$ticketNo = $detLST['prefix'].$detLST['cur_id'];
+	  			$detLST['cur_id'] = $detLST['cur_id']+1;
+	  			$prefix = $detLST['prefix'];
+	  			$iCur_id = $detLST['cur_id'];
+	  			$sqlLSUT = "UPDATE vtiger_modentity_num SET cur_id=$iCur_id WHERE semodule='HelpDesk' AND prefix='$prefix'";
+	  			
+	  			$resLSUT = $conn->query($sqlLSUT);
+
+	  			$current_user_id = $iContactid;
+	  			$sqlCUFT = "INSERT INTO vtiger_crmentity_user_field (recordid,userid,starred) VALUES ($cesT,$current_user_id,0)";
+	  			
+	  			$resCUFT = $conn->query($sqlCUFT);
+	  			$created_date_time = date('Y-m-d H:i:s');
+	  			$sqlCET = "INSERT INTO vtiger_crmentity(crmid, smcreatorid, smownerid, modifiedby, setype, createdtime, modifiedtime,presence,source, label) VALUES ($cesT,$current_user_id,$current_user_id,$current_user_id,'HelpDesk','$created_date_time','$created_date_time',1,'CRM','$ticketNo')";
+	  			//echo $sqlCET;exit;
+	  			$resCET = $conn->query($sqlCET);
+
+	  			$sqlTT = "INSERT INTO vtiger_troubletickets(ticketid,ticket_no,priority,title,status,contact_id) VALUES($cesT,'$ticketNo','Normal','Normal','Open',$current_user_id)";
+	  			
+	  			$resTT = $conn->query($sqlTT);
+
+	  			$sqlTCF = "INSERT INTO vtiger_ticketcf SET ticketid=$cesT";
+				$resTCF = $conn->query($sqlTCF);
+				$conn -> close();
+				$message = "Hi Your ticket TK ". $cesT ." is successfully created. We will try to resolve the ticket as soon as possible and will send updates on your ticket via SMS. You can also again come and check the status of the ticket.";
+			}
+
   		}
   	}else{
   		$message = "Something went wrong";
