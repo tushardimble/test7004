@@ -395,8 +395,6 @@
         			$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
         		}
           	}else{
-
-          		$
 	  			//Generate Ticket
 				$sqlCEST 	= "SELECT id FROM vtiger_crmentity_seq";
 
