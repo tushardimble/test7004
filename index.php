@@ -438,7 +438,13 @@
 	  			$sqlTCF = "INSERT INTO vtiger_ticketcf SET ticketid=$cesT";
 				$resTCF = $conn->query($sqlTCF);
 				$conn -> close();
-				$message = "Dear ". $sContactname .", your ticket TK ". $cesT ." is successfully created. We will try to resolve the ticket as soon as possible and will send updates on your ticket via SMS. You can also again come and check the status of the ticket.";
+				if($languageCode == "hi"){
+					$message = "प्रिय ". $sContactname .", आपका टिकट TK ". $cesT ." सफलतापूर्वक बनाया गया है। हम जल्द से जल्द टिकट को हल करने की कोशिश करेंगे और एसएमएस के माध्यम से आपके टिकट पर अपडेट भेजेंगे। आप फिर से टिकट की स्थिति भी देख सकते हैं।";
+				}else{
+					
+					$message = "Dear ". $sContactname .", your ticket TK ". $cesT ." is successfully created. We will try to resolve the ticket as soon as possible and will send updates on your ticket via SMS. You can also again come and check the status of the ticket.";
+				}
+				
 			}
 
   		}
