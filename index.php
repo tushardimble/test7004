@@ -431,7 +431,7 @@
 	  			//echo $sqlCET;exit;
 	  			$resCET = $conn->query($sqlCET);
 
-	  			$sqlTT = "INSERT INTO vtiger_troubletickets(ticketid,ticket_no,priority,title,status,contact_id) VALUES($cesT,'$ticketNo','$ticket_desc','Normal','Open',$current_user_id)";
+	  			$sqlTT = "INSERT INTO vtiger_troubletickets(ticketid,ticket_no,priority,title,status,contact_id) VALUES($cesT,'$ticketNo','Normal','$ticket_desc','Open',$current_user_id)";
 	  			
 	  			$resTT = $conn->query($sqlTT);
 
