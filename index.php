@@ -395,6 +395,8 @@
         			$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
         		}
           	}else{
+
+          		$ticket_desc =  $requestDecode->queryResult->parameters->ticket_desc;
 	  			//Generate Ticket
 				$sqlCEST 	= "SELECT id FROM vtiger_crmentity_seq";
 
@@ -429,7 +431,7 @@
 	  			//echo $sqlCET;exit;
 	  			$resCET = $conn->query($sqlCET);
 
-	  			$sqlTT = "INSERT INTO vtiger_troubletickets(ticketid,ticket_no,priority,title,status,contact_id) VALUES($cesT,'$ticketNo','Normal','Normal','Open',$current_user_id)";
+	  			$sqlTT = "INSERT INTO vtiger_troubletickets(ticketid,ticket_no,priority,title,status,contact_id) VALUES($cesT,'$ticketNo','$ticket_desc','Normal','Open',$current_user_id)";
 	  			
 	  			$resTT = $conn->query($sqlTT);
 
