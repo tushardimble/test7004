@@ -297,9 +297,9 @@
 	  	    	}
   			}
 
-  			$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+  			$sLogInsertBotSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
 
-	        $sLogResult = $logconn -> query($sLogInsertSQL);
+	        $sLogBotResult = $logconn -> query($sLogInsertBotSQL);
   		}else if($intent == "BalanceRequest - yes"){
   			if($isSessionAvailable == "Yes"){
   				$account_number = $aUserData['account_number'];
