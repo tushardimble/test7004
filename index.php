@@ -19,13 +19,32 @@
   	if ($conn->connect_error) {
     	die("Connection failed: " . $conn->connect_error);
   	}
+
+
+  	//  Make Second DB Connection for logger
+  	$logservername = "66.45.232.178";
+  	$logusername 	= "logger";
+  	$logpassword 	= "logger";
+  	$logdbname 	= "logger";
+  	// Connect with Db 
+  	$logconn = new mysqli($logservername, $logusername, $logpassword, $logdbname);
+
+  	// Check connection
+  	if ($logconn->connect_error) {
+    	die("Connection failed: " . $logconn->connect_error);
+  	}
+
+
+
   	// Get Json Input from Dialogflow
   	$request 		= file_get_contents('php://input');
   	$requestDecode 	= json_decode($request);
+  	//echo"<pre>";print_r($requestDecode);exit;
 
   	$intent 		= $requestDecode	->	queryResult	->	intent 	-> 	displayName;
   	$languageCode 	= $requestDecode 	-> 	queryResult -> 	languageCode;
-
+  	$userQueryText 	= $requestDecode 	-> 	queryResult -> 	queryText;
+  	$log_current_time = date("Y-m-d H:i:s");
   	// Get Session Id
   	$outputContexts 		= 	$requestDecode -> queryResult -> outputContexts[0] -> name;
   	$outputContextsArray 	= 	explode("/", $outputContexts);
@@ -158,6 +177,15 @@
       		}else{
       			$message = "Something went wrong";
       		}
+
+      		// Insert Log In DB User Query
+	        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
+
+	        // Insert Log In DB Bot Reply
+			$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
+
   		}else if($intent == "authenticationselection - custom - yes" || $intent == "reenterotp"){
 
   			$otp = $requestDecode->queryResult->parameters->OTP;
@@ -185,6 +213,13 @@
 		        	}else{
 		        		$message = "अब आप सफलतापूर्वक प्रमाणित हो गए हैं। अब आप मुझसे अपने खाते के बारे में पूछ सकते हैं ";
 		        	}
+		        	// Insert Log In DB User Query
+			        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+			        $sLogResult = $logconn -> query($sLogInsertSQL);
+
+			        // Insert Log In DB Bot Reply
+					$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+			        $sLogResult = $logconn -> query($sLogInsertSQL);
 
         		}else{
         			// If OTP is wrong then reenter OTP
@@ -236,29 +271,35 @@
 	          
 	        }
 
+	        // Insert Log In DB User Query
+	        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
 
   			if($isSessionAvailable == "Yes" || $isSessionAvailable == "NotValidate"){
   				$sessionId = $sessionId;
-	        $sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
+	        	$sql = "DELETE FROM session_data WHERE sessionId = '$sessionId'";
 	           
-	        $result     = $conn->query($sql);
-		      if($languageCode == 'hi'){
-		        $message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
-	        }else{
-	          		//$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
-	          $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
-            
-	        }
+	        	$result     = $conn->query($sql);
+	      		if($languageCode == 'hi'){
+	        		$message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
+        		}else{
+          				//$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
+          			$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
+        		}
+
 
   			}else if($isSessionAvailable == "No"){
 
   				if($languageCode == 'hi'){
   					$message = $greeting . " हाय मैं कोन्नेक्त  बैंक मित्र हूं। कोन्नेक्त  बैंक में आपका स्वागत है!  मैं आपको हमारे बँक अकाऊंट संबंधी और सामान्य प्रश्नों में मदत कर सकती हूँ.";
 	  	    	}else{
-	  	    		// $message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!. I can interact in English and Hindi, which language would you be more comfortable with.";
 	  	    		$message = $greeting." Hi I am Conneqt bank buddy.  Welcome to Conneqt bank!.I can help you with bank account related or general queries about our products and service.";
 	  	    	}
   			}
+
+  			$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
   		}else if($intent == "BalanceRequest - yes"){
   			if($isSessionAvailable == "Yes"){
   				$account_number = $aUserData['account_number'];
@@ -283,6 +324,14 @@
 		          		$message = "Dear ".$data[0]['name'] . ", your account balance is ".$data[0]['account_balance']. " .  What else I can help you with?";
 		          	}
 		        }
+
+		        // Insert Log In DB User Query
+		        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+		        $sLogResult = $logconn -> query($sLogInsertSQL);
+
+		        // Insert Log In DB Bot Reply
+				$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+		        $sLogResult = $logconn -> query($sLogInsertSQL);
   			}else if($isSessionAvailable == "No"){
   				$data['followupEventInput']['name'] = "recall";
           		$data['followupEventInput']['parameters']['Account_Number'] = '';
@@ -298,6 +347,7 @@
 		        $aBlankDetails = json_encode($data);
 		        echo $aBlankDetails;exit;
   			}
+
   		}else if($intent == "HomeLoan"){
           	if($accountAndMobileNumberExist == "No"){
             	if($languageCode == "hi"){
@@ -305,6 +355,8 @@
         		}else{
         			$message = "Sorry we could not find any details against this account number and mobile number. What else I can help you with?";
         		}
+
+
           	}else{
           		$home_loan_amount = $requestDecode -> queryResult -> parameters -> HomeLoanAmount;
             	// Update Home Loan Amount
@@ -318,6 +370,14 @@
             	}
             	
           	}
+
+          	// Insert Log In DB User Query
+	        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
+
+	        // Insert Log In DB Bot Reply
+			$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
   		}else if($intent == "openFDaccount"){
 	        if($accountAndMobileNumberExist == "No"){
             	if($languageCode == "hi"){
@@ -348,6 +408,13 @@
 	          		echo $aBlankDetails;exit;
 	            }
           	}
+          	// Insert Log In DB User Query
+	        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
+
+	        // Insert Log In DB Bot Reply
+			$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
   		}else if($intent == "TicketDetails"){
 		        if($accountAndMobileNumberExist == "No"){
 		          	if($languageCode == "hi"){
@@ -386,6 +453,13 @@
 		            }
 		          }
 		        }
+		        // Insert Log In DB User Query
+		        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+		        $sLogResult = $logconn -> query($sLogInsertSQL);
+
+		        // Insert Log In DB Bot Reply
+				$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+		        $sLogResult = $logconn -> query($sLogInsertSQL);
   			
   		}else if($intent == "createTicket"){
   			if($accountAndMobileNumberExist == "No"){
@@ -446,10 +520,28 @@
 				}
 				
 			}
+			// Insert Log In DB User Query
+	        $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
 
+	        // Insert Log In DB Bot Reply
+			$sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$message','bot','$log_current_time')";
+	        $sLogResult = $logconn -> query($sLogInsertSQL);
   		}
   	}else{
   		$message = "Something went wrong";
+  	}
+
+  	if($intent != "authenticationselection - custom" || $intent != "add_details" || $intent != "authenticationselection - custom - yes" || $intent != "reenterotp" || $intent != "Greeting" || $intent != "BalanceRequest - yes" || $intent != "HomeLoan" || $intent != "openFDaccount" || $intent != "TicketDetails" || $intent != "createTicket"){
+  		
+  		// Insert Log In DB User Query
+	    $sLogInsertSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$userQueryText','customer','$log_current_time')";
+	    $sLogResult = $logconn -> query($sLogInsertSQL);
+
+	    $sBotAnswer = $requestDecode 	-> 	queryResult -> 	fulfillmentText;
+	    // Insert Log In DB User Query(Bot Answer)
+	    $sLogInsertBotSQL = "INSERT INTO chat(chat_session_id,chat_message,chat_from,created_date) VALUES ('$sessionId','$sBotAnswer','bot','$log_current_time')";
+	    $sLogBotResult = $logconn -> query($sLogInsertBotSQL);
   	}
 
   	$conn -> close();
