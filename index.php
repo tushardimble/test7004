@@ -510,6 +510,11 @@
 	    // Insert Log In DB User Query(Bot Answer)
 	    $sLogInsertBotSQL = "INSERT INTO tx_chat_session_details(chat_summary_id,message,msg_from,agent_id,created_at) VALUES ('$chat_summary_id','$message1','bot','0','$log_current_time')";
 	    $sLogBotResult = $logconn -> query($sLogInsertBotSQL);
+
+	    // Update conversation time 
+	    // Update Chat end time
+    	$sLogInsertSQL = "UPDATE tx_chat_summary SET chat_end_time = '$log_current_time' WHERE session_id='$sessionId'";
+    	$sLogResult = $logconn -> query($sLogInsertSQL);
   		$logconn -> close();
   	}
     
