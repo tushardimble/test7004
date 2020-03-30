@@ -504,8 +504,8 @@
 	    //echo $sLogInsertCustSQL;exit;
 	    $sLogBotResult = $logconn -> query($sLogInsertCustSQL);
 
-	    if($message == ""){
-	    	$message = $requestDecode 	-> 	queryResult -> 	fulfillmentText;
+	    if($message1 == ""){
+	    	$message1 = $requestDecode 	-> 	queryResult -> 	fulfillmentText;
 	   	}
 	    // Insert Log In DB User Query(Bot Answer)
 	    $sLogInsertBotSQL = "INSERT INTO tx_chat_session_details(chat_summary_id,message,msg_from,agent_id,created_at) VALUES ('$chat_summary_id','$message1','bot','0','$log_current_time')";
