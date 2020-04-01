@@ -499,6 +499,7 @@
   		}
 
   		$message1 = preg_replace('/[^A-Za-z0-9\-]/', ' ', $message);
+		mysqli_set_charset($logconn,'utf8');
 	   	// Insert Log In DB User Query(Customer Query)
 	    $sLogInsertCustSQL = "INSERT INTO tx_chat_session_details(chat_summary_id,message,msg_from,agent_id,created_at) VALUES ('$chat_summary_id','$userQueryText','customer','0','$log_current_time')";
 	    //echo $sLogInsertCustSQL;exit;
