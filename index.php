@@ -184,7 +184,7 @@
   		}else if($intent == "authenticationselection - custom - yes" || $intent == "reenterotp"){
 
   			$otp = $requestDecode->queryResult->parameters->OTP;
-  			
+  			$otp = str_replace(' ', '', $otp);
   			if($isSessionAvailable == "Yes" || $isSessionAvailable == "NotValidate"){
   				$mobile_number = $aUserData['mobile_number'];
   				// Check OTP is Valid Or Not
