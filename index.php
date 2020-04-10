@@ -474,7 +474,27 @@
 				
 			}
 		
-  		}
+  		}else if($intent == "OPERATOR_REQUEST"){
+        if($isSessionAvailable == "Yes"){
+          $account_number = $aUserData['account_number'];
+          $mobile_number  = $aUserData['mobile_number'];
+            // Get Account Balance
+            $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name , vcscf.cf_864 as account_balance FROM vtiger_contactdetails vcd JOIN vtiger_crmentity vce ON vcd.contactid=vce.crmid JOIN vtiger_contactscf vcscf ON vcd.contactid=vcscf.contactid WHERE vce.deleted=0 AND vcscf.cf_856='$account_number' AND vcd.mobile='$mobile_number' ORDER BY vcd.contactid DESC";
+            $result = $conn->query($sql);
+            while($row =mysqli_fetch_assoc($result)) {
+              $data[] = $row;
+            }
+
+          $message = "Dear ". $data[0]['name'] ."! I'll hand you over to a live operator.  Dear User you are successfully connected with our agent.";
+        }else if($isSessionAvailable == "No"){
+          $data['followupEventInput']['name'] = "recall";
+          $data['followupEventInput']['parameters']['Account_Number'] = '';
+          $data['followupEventInput']['parameters']['Contact'] = '';
+          $data['languageCode'] = "en-US";
+          $aBlankDetails = json_encode($data);
+          echo $aBlankDetails;exit;
+        }
+      }
   	}else{
   		$message = "Something went wrong";
   	}
