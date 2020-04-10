@@ -1,6 +1,5 @@
+
 <?php
-	// Start the session
-	session_start();
 	/*
 		Author: Tushar Dimble
 		Update:11-march-2020
@@ -479,7 +478,7 @@
   	}else{
   		$message = "Something went wrong";
   	}
-
+ 	 
   	// Check Session Exist in Our Db
   	if($sessionId != ""){
   		$sCheckSessionSql 	= "SELECT * FROM tx_chat_summary WHERE session_id = '$sessionId'";
@@ -498,26 +497,31 @@
     		$chat_summary_id = $aSessionData['summary_id'];
   		}
 
-  		$message1 = preg_replace('/[^A-Za-z0-9\-]/', ' ', $message);
-		mysqli_set_charset($logconn,'utf8');
+  		//$message = preg_replace('/[^A-Za-z0-9\-]/', ' ', $message);
+  		mysqli_set_charset($logconn,'utf8');
 	   	// Insert Log In DB User Query(Customer Query)
 	    $sLogInsertCustSQL = "INSERT INTO tx_chat_session_details(chat_summary_id,message,msg_from,agent_id,created_at) VALUES ('$chat_summary_id','$userQueryText','customer','0','$log_current_time')";
-	    //echo $sLogInsertCustSQL;exit;
+	    // echo $sLogInsertCustSQL;exit;
 	    $sLogBotResult = $logconn -> query($sLogInsertCustSQL);
 
-	    if($message1 == ""){
-	    	$message1 = $requestDecode 	-> 	queryResult -> 	fulfillmentText;
+	    if($message == ""){
+	    	$message = $requestDecode 	-> 	queryResult -> 	fulfillmentText;
+        $message1 = preg_replace('/[^A-Za-z0-9\-]/', ' ', $message);
+        $message = $message;
+        //echo $message;exit;
 	   	}
+
 	    // Insert Log In DB User Query(Bot Answer)
-		mysqli_set_charset($logconn,'utf8');
 	    $sLogInsertBotSQL = "INSERT INTO tx_chat_session_details(chat_summary_id,message,msg_from,agent_id,created_at) VALUES ('$chat_summary_id','$message1','bot','0','$log_current_time')";
+      //echo $sLogInsertBotSQL;exit;
 	    $sLogBotResult = $logconn -> query($sLogInsertBotSQL);
 
 	    // Update conversation time 
 	    // Update Chat end time
-    	$sLogInsertSQL = "UPDATE tx_chat_summary SET chat_end_time = '$log_current_time' WHERE session_id='$sessionId'";
-    	$sLogResult = $logconn -> query($sLogInsertSQL);
-  		$logconn -> close();
+    	$sLogUpdateSQL = "UPDATE tx_chat_summary SET chat_end_time = '$log_current_time' WHERE session_id='$sessionId'";
+    	$sLogResult = $logconn -> query($sLogUpdateSQL);
+
+  		$logconn -> query($a);
   	}
     
   	$conn -> close();
