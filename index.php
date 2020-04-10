@@ -476,7 +476,7 @@
 		
   		}else if($intent == "OPERATOR_REQUEST"){
         $user_name   = $requestDecode->queryResult->parameters->user_name;
-        $message = "Dear ," .$user_name. ",I'll hand you over to a live operator. Dear User you are successfully connected with our agent.";
+        $message = "Dear , " .$user_name. " ,I'll hand you over to a live operator. Dear User you are successfully connected with our agent.";
       }
   	}else{
   		$message = "Something went wrong";
