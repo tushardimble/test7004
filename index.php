@@ -536,7 +536,7 @@
   		$message[0]['platform']="ACTIONS_ON_GOOGLE";
   		$message[0]['linkOutSuggestion']['destinationName']="test";
   		$message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
-  		$message[1]['text']['text'][0]="A Debit Card is personal card provided to the customers by the Bank to enable the card holder to withdraw money or to have the cost of purchases charged directly to the holder's bank account.";
+  		//$message[1]['text']['text'][0]="A Debit Card is personal card provided to the customers by the Bank to enable the card holder to withdraw money or to have the cost of purchases charged directly to the holder's bank account.";
   		// $message[0]['buttons'][0]['postback']="https://audiodemo-ftnluv.web.app/";
   		// $message[0]['buttons'][0]['text']="Open";
   		// $message[0]['imageUrl']="http://urltoimage.com";
