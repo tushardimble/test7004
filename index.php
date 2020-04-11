@@ -543,9 +543,16 @@
   		// $message[0]['platform']="ACTIONS_ON_GOOGLE";
   		// $message[0]['title']="Card Title";
   		// $message[0]['type']=1;
-  		$message['payload']['google']['expectUserResponse']=true;
-  		$message['payload']['google']['richResponse']['linkOutSuggestion']['destinationName']="Suggestion Link";
-  		$message['payload']['google']['richResponse']['linkOutSuggestion']['url']="Suggestion Link";
+  		$message['google']['expectUserResponse']=true;
+  		$message['google']['richResponse']['linkOutSuggestion']['destinationName']="Suggestion Link";
+  		$message['google']['richResponse']['linkOutSuggestion']['url']="Suggestion Link";
+  		$data = array (
+    	'payload' => $message
+  		);
+  		$aFinalDialogflowResponse = json_encode($data,JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
+
+  	echo $aFinalDialogflowResponse;
+  		exit;
 
   	}
   	$data = array (
