@@ -536,7 +536,7 @@
   		$message[0]['platform']="ACTIONS_ON_GOOGLE";
   		$message[0]['linkOutSuggestion']['destinationName']="test";
   		$message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
-  		$message[1]['text']['text']="Dummy text";
+  		$message[1]['text']['text'][0]="A Debit Card is personal card provided to the customers by the Bank to enable the card holder to withdraw money or to have the cost of purchases charged directly to the holder's bank account.";
   	}
   	$data = array (
     	'fulfillmentText' => $message
