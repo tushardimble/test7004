@@ -534,8 +534,9 @@
   	
   	if($intent=="debit card"){
   		$message[0]['platform']="ACTIONS_ON_GOOGLE";
-  	$message[0]['linkOutSuggestion']['destinationName']="test";
-  	$message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
+  		$message[0]['linkOutSuggestion']['destinationName']="test";
+  		$message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
+  		$message[1]['text']['text']="Dummy text";
   	}
   	$data = array (
     	'fulfillmentText' => $message
