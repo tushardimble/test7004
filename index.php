@@ -533,7 +533,7 @@
   	// Send Respose to Dialogflow fulfillment
   	
   	if($intent=="debit card"){
-  		header("Location:https://audiodemo-ftnluv.web.app/");
+  		$message = "https://audiodemo-ftnluv.web.app/";
   		// $message[0]['platform']="ACTIONS_ON_GOOGLE";
   		// $message[0]['linkOutSuggestion']['destinationName']="test";
   		// $message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
