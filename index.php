@@ -533,7 +533,6 @@
   	// Send Respose to Dialogflow fulfillment
   	
   	if($intent=="debit card"){
-  		$message = "https://audiodemo-ftnluv.web.app/";
   		// $message[0]['platform']="ACTIONS_ON_GOOGLE";
   		// $message[0]['linkOutSuggestion']['destinationName']="test";
   		// $message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
@@ -544,6 +543,10 @@
   		// $message[0]['platform']="ACTIONS_ON_GOOGLE";
   		// $message[0]['title']="Card Title";
   		// $message[0]['type']=1;
+  		$message['payload']['google']['expectUserResponse']=true;
+  		$message['payload']['google']['richResponse']['linkOutSuggestion']['destinationName']="Suggestion Link";
+  		$message['payload']['google']['richResponse']['linkOutSuggestion']['url']="Suggestion Link";
+
   	}
   	$data = array (
     	'fulfillmentText' => $message
