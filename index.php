@@ -533,22 +533,14 @@
   	// Send Respose to Dialogflow fulfillment
   	
   	if($intent=="debit card"){
-  		$fulfillmentMessages[0]['platform']="ACTIONS_ON_GOOGLE";
-  	$fulfillmentMessages[0]['linkOutSuggestion']['destinationName']="test";
-  	$fulfillmentMessages[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
+  		$message[0]['platform']="ACTIONS_ON_GOOGLE";
+  	$message[0]['linkOutSuggestion']['destinationName']="test";
+  	$message[0]['linkOutSuggestion']['uri']="https://audiodemo-ftnluv.web.app/";
   	}
   	$data = array (
-    	'fulfillmentText' => $fulfillmentMessages
+    	'fulfillmentText' => $message
   	);
-// $aFinalDialogflowResponse = "fulfillmentMessages": [
-//       {
-//         "platform": "ACTIONS_ON_GOOGLE",
-//         "linkOutSuggestion": {
-//           "destinationName": "test",
-//           "uri": "https://audiodemo-ftnluv.web.app/"
-//         }
-//       }
-//     ];
+
   	$aFinalDialogflowResponse = json_encode($data,JSON_HEX_TAG | JSON_HEX_APOS | JSON_HEX_QUOT | JSON_HEX_AMP | JSON_UNESCAPED_UNICODE);
 
   	echo $aFinalDialogflowResponse;
