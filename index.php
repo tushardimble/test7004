@@ -545,7 +545,7 @@
   		// $message[0]['type']=1;
   		$message['google']['expectUserResponse']=true;
   		$message['google']['richResponse']['linkOutSuggestion']['destinationName']="Suggestion Link";
-  		$message['google']['richResponse']['linkOutSuggestion']['url']="Suggestion Link";
+  		$message['google']['richResponse']['linkOutSuggestion']['url']="https://audiodemo-ftnluv.web.app/";
   		$data = array (
     	'payload' => $message
   		);
