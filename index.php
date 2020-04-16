@@ -8,7 +8,7 @@
 	error_reporting(0);
 	date_default_timezone_set('Asia/Calcutta');
 	// DB Credentials which is hosting on Plesk Server
-	$servername = "66.45.232.178";
+	  $servername = "66.45.232.178";
   	$username 	= "axisbankcrm3";
   	$password 	= "axisbankcrm3";
   	$dbname 	= "axisbankcrm3";
@@ -46,6 +46,7 @@
   	$intent 		= $requestDecode	->	queryResult	->	intent 	-> 	displayName;
   	$languageCode 	= $requestDecode 	-> 	queryResult -> 	languageCode;
   	$userQueryText 	= $requestDecode 	-> 	queryResult -> 	queryText;
+    //echo $userQueryText;exit;
   	$log_current_time = date("Y-m-d H:i:s");
   	// Get Session Id
   	$outputContexts 		= 	$requestDecode -> queryResult -> outputContexts[0] -> name;
@@ -112,7 +113,7 @@
   			Intent wise code
   		*/
   		if($intent === "authenticationselection - custom" || $intent === "add_details"){
-  			$account_number = $requestDecode->queryResult->parameters->Account_Number;
+  			 $account_number = $requestDecode->queryResult->parameters->Account_Number;
       		$account_number = str_replace(' ', '', $account_number);
       		$mobile_number = $requestDecode->queryResult->parameters->Contact;
       		$mobile_number = str_replace('-', '', $mobile_number);
@@ -176,7 +177,9 @@
 	            		$message = "We have sent an OTP to your mobile number. Please provide me the OTP.";
 	            	}
 		        }
-      		}else{
+      		}else if($account_number == "" && $mobile_number != ""){
+            $message = "Please provide the Account Number";
+          }else{
       			$message = "Something went wrong";
       		}
 
