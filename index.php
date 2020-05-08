@@ -18,15 +18,12 @@
     	$end_time  		= 	"18:00";
     	$end_time    	=   strtotime($end_time);
     	// "current time ". $current_time ."<br /> Start Time ". $start_time. " <br /> End Time ".$end_time;exit;
-    	if($current_time > $start_time && $current_time > $end_time){
-    		$demo_request 	= "getButtonText('Demo / Installation Request')";
-    		$ticket_status 	= "getButtonText('Status of Tickets')";
-    		$raise_cmt 		= "getButtonText('Raise a Complaint')";
-    		$comp_warranty 	= "getButtonText('Comprehensive warranty')";
+    	if($current_time > $start_time && $current_time < $end_time){
+    		
 
-    		$msg = "It is our pleasure to have you as customer. I can help you in doing the following.<br />  <button class='btn-sm btn-primary'  onclick='$demo_request'>Demo / Installation Request</button><br/><button class='btn-sm btn-primary' onclick='$ticket_status'>Status of Tickets</button><br/><button class='btn-sm btn-primary' onclick='$raise_cmt'>Raise a Complaint</button><br><button class='btn-sm btn-primary' onclick='$comp_warranty'>Comprehensive warranty</button>";
+    		$msg = "Yes";
     	}else{
-    		$msg = "Sorry, Our Operational time is from 9 AM to 6 PM. You can share you phone number and we will give a call.";
+    		$msg = "No";
     		
     	}
     	
