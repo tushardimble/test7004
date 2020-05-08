@@ -30,6 +30,15 @@
     		
     	}
     	
+    }else if($intent == "customer_option - custom"){
+    	// Check is Agent is Available
+    	$sAgentAvailability = "yes";
+    	$user_name     = $requestDecode -> queryResult -> parameters -> user_name;
+    	if($sAgentAvailability == "yes"){
+    		$msg = $user_name." You have been connected to an Agent";
+    	}else{
+    		$msg = "Sorry ".$user_name." it seems our agent busy. Can you try after sometime. Thank you for our co-operation";
+    	}
     }
     $data = array (
       'fulfillmentText' => $msg
