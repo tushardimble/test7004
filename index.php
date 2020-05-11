@@ -15,7 +15,7 @@
     	$start_time  	= 	"9:00";
     	$start_time    	=   strtotime($start_time);
 
-    	$end_time  		= 	"18:00";
+    	$end_time  		= 	"21:00";
     	$end_time    	=   strtotime($end_time);
     	// "current time ". $current_time ."<br /> Start Time ". $start_time. " <br /> End Time ".$end_time;exit;
     	if($current_time > $start_time && $current_time < $end_time){
