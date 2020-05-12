@@ -30,7 +30,7 @@
     		
     	}
     	
-    }else if($intent == "customer_option - custom"){
+    }else if($intent == "customer_option"){
     	// Check is Agent is Available
     	$sAgentAvailability = "yes";
     	$user_name     = $requestDecode -> queryResult -> parameters -> user_name;
