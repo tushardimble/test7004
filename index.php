@@ -4,7 +4,7 @@
     Update:11-march-2020
     Purpose: Write code to connect with CRM DB and provide respose to Dialogflow
   */
-  error_reporting(0);
+  error_reporting(E_ALL);
   date_default_timezone_set('Asia/Calcutta');
   // DB Credentials which is hosting on Plesk Server
   //$servername = "66.45.232.178";
