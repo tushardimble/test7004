@@ -150,7 +150,7 @@
 
                 // Send OTP SMS on Mobile Number
                 $curl = curl_init();
-                  $url = "http://2factor.in/API/V1/e46e0ef4-5d1b-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/".$otp;
+                  $url = "http://2factor.in/API/V1/2ef67fc4-9aa8-11ea-9fa5-0200cd936042/SMS/".$mobile_number."/".$otp;
                   curl_setopt_array($curl, array(
                     CURLOPT_URL => $url,
                     CURLOPT_RETURNTRANSFER => true,
