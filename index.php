@@ -394,7 +394,7 @@
               //$ticket_number = $ticket_number[1];
 
               if($ticket_number != "" && $mobile_number != ""){
-                $ticket_number = "TT".$ticket_number;
+                //$ticket_number = "TT".$ticket_number;
                 $sql = "SELECT CONCAT(vcd.firstname,' ',vcd.lastname) AS name,vtt.status FROM vtiger_troubletickets vtt JOIN vtiger_crmentity vce ON vtt.ticketid = vce.crmid JOIN vtiger_contactdetails vcd ON vtt.contact_id = vcd.contactid WHERE vce.deleted='0' AND vcd.mobile='$mobile_number' AND vtt.ticket_no='$ticket_number' ORDER BY vtt.ticketid DESC";
 
                 $data = array();
