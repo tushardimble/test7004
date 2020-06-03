@@ -26,7 +26,7 @@
 
     		$message = "It is our pleasure to have you as customer. I can help you in doing the following.<br />  <button class='btn-sm btn-primary'  onclick=$demo_request>Demo / Installation Request</button><br/><button class='btn-sm btn-primary' onclick=$ticket_status>Status of Tickets</button><br/><button class='btn-sm btn-primary' onclick=$raise_cmt>Raise a Complaint</button><br><button class='btn-sm btn-primary' onclick=$comp_warranty>Comprehensive warranty</button>";
     	}else{
-    		$message = "Sorry, Our Operational time is from 9 AM to 6 PM. You can share you phone number and we will give a call.";
+    		$message = "Sorry, Our Operational time is from 9 AM to 6 PM. You can share you phone number and we will give a call...";
     		
     	}
     	
