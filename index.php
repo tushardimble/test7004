@@ -43,6 +43,7 @@
         // Here We integrate Voltas API to check SR Status
         $ticket_number = $requestDecode -> queryResult -> parameters -> ticketno;
         if($ticket_number != ""){
+		$message = $ticket_number."HI";
             $curl = curl_init();
 
             curl_setopt_array($curl, array(
