@@ -7,7 +7,7 @@
     
     $intent     	= $requestDecode  ->  queryResult ->  intent  ->  displayName;
     $userQueryText  = $requestDecode  ->  queryResult ->  queryText;
-
+ echo $intent;exit;
     if($intent == "customer"){
     	$current_time 	= 	date("H:i");
     	$current_time   =   strtotime($current_time);
