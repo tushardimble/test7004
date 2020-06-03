@@ -39,6 +39,34 @@
     	}else{
     		$message = "Sorry ".$user_name." it seems our agent busy. Can you try after sometime. Thank you for our co-operation";
     	}
+    }else if($intent == "SRstatus"){
+        // Here We integrate Voltas API to check SR Status
+        $ticket_number = $requestDecode -> queryResult -> parameters -> ticketno;
+        if($ticket_number != ""){
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, array(
+              CURLOPT_URL => "https://qavcare.voltasworld.com/siebel-rest/v1.0/service/VoltasRestAPISRQuery/GetStatus?PageSize=2&ViewMode=All",
+              CURLOPT_RETURNTRANSFER => true,
+              CURLOPT_ENCODING => "",
+              CURLOPT_MAXREDIRS => 10,
+              CURLOPT_TIMEOUT => 0,
+              CURLOPT_FOLLOWLOCATION => true,
+              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+              CURLOPT_CUSTOMREQUEST => "POST",
+              CURLOPT_POSTFIELDS =>"{\r\n    \"body\": {\r\n        \"SRNumber\": \"18110100001\"\r\n    }\r\n}\r\n",
+              CURLOPT_HTTPHEADER => array(
+                "Authorization: Basic Q09OTkVRVDpVSSgzMzAyMzB0",
+                "Content-Type: application/json"
+              ),
+            ));
+
+            $response = curl_exec($curl);
+
+            curl_close($curl);
+            echo $response;exit;
+        }
     }
     $data = array (
       'fulfillmentText' => $message
