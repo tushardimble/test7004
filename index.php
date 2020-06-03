@@ -40,9 +40,10 @@
     		$message = "Sorry ".$user_name." it seems our agent busy. Can you try after sometime. Thank you for our co-operation";
     	}
     }else if($intent == "SRstatus"){
+	 $message = "HI";
         // Here We integrate Voltas API to check SR Status
         $ticket_number = $requestDecode -> queryResult -> parameters -> ticketno;
-	    $message = $ticket_number."HI";
+	    
         if($ticket_number != ""){
 		
             $curl = curl_init();
