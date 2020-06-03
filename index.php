@@ -41,40 +41,7 @@
     	}
     }else if($intent == "SRstatus"){
 	 $message = "HI";
-        // Here We integrate Voltas API to check SR Status
-        $ticket_number = $requestDecode -> queryResult -> parameters -> ticketno;
-	    
-        if($ticket_number != ""){
-		
-            $curl = curl_init();
-
-            curl_setopt_array($curl, array(
-              CURLOPT_URL => "https://qavcare.voltasworld.com/siebel-rest/v1.0/service/VoltasRestAPISRQuery/GetStatus?PageSize=2&ViewMode=All",
-              CURLOPT_RETURNTRANSFER => true,
-              CURLOPT_ENCODING => "",
-              CURLOPT_MAXREDIRS => 10,
-              CURLOPT_TIMEOUT => 0,
-              CURLOPT_FOLLOWLOCATION => true,
-              CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-              CURLOPT_CUSTOMREQUEST => "POST",
-              CURLOPT_POSTFIELDS =>"{\r\n    \"body\": {\r\n        \"SRNumber\": \"$ticket_number\"\r\n    }\r\n}\r\n",
-              CURLOPT_HTTPHEADER => array(
-                "Authorization: Basic Q09OTkVRVDpVSSgzMzAyMzB0",
-                "Content-Type: application/json"
-              ),
-            ));
-
-            $response = curl_exec($curl);
-            //echo"<pre>";print_r($response);exit;
-            curl_close($curl);
-            $response = json_decode($response,true);
-            if (array_key_exists("Status",$response)){
-                $message = "The status of ticket no ".$ticket_number." is ". $response['Status'];
-            }else{
-                $message = "Invalid SR Number";
-            }
-            
-        }
+        
     }
     $data = array (
       'fulfillmentText' => $message
