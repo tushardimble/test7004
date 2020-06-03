@@ -41,7 +41,7 @@
     	}
     }else if($intent == "SRstatus"){
 	 $message = "HI";
-        
+         echo $message;exit;
     }
     $data = array (
       'fulfillmentText' => $message
